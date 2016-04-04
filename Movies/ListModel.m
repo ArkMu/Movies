@@ -1,20 +1,14 @@
 //
-//  HotMovieModel.m
+//  ListModel.m
 //  Movies
 //
-//  Created by qingyun on 16/4/2.
+//  Created by qingyun on 16/4/4.
 //  Copyright © 2016年 qingyun. All rights reserved.
 //
 
-#import "HotMovieModel.h"
+#import "ListModel.h"
 
-@implementation HotMovieModel
-
-- (void)setValue:(id)value forUndefinedKey:(NSString *)key {
-    if ([key isEqualToString:@"id"]) {
-        _Id = (NSInteger)value;
-    }
-}
+@implementation ListModel
 
 - (instancetype)initWithDictionary:(NSDictionary *)dict {
     self = [super init];
@@ -24,7 +18,6 @@
     
     return self;
 }
-
 
 + (instancetype)modelWithDictionary:(NSDictionary *)dict {
     return [[self alloc] initWithDictionary:dict];

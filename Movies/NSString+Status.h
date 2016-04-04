@@ -10,4 +10,6 @@
 
 @interface NSString (Status)
 
++ (instancetype)createDateStringWithTimeInterval:(NSInteger)intervalGet;
+
 @end

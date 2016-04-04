@@ -1,14 +1,14 @@
 //
-//  HotMovieModel.m
+//  ComingModel.m
 //  Movies
 //
-//  Created by qingyun on 16/4/2.
+//  Created by qingyun on 16/4/4.
 //  Copyright © 2016年 qingyun. All rights reserved.
 //
 
-#import "HotMovieModel.h"
+#import "ComingModel.h"
 
-@implementation HotMovieModel
+@implementation ComingModel
 
 - (void)setValue:(id)value forUndefinedKey:(NSString *)key {
     if ([key isEqualToString:@"id"]) {
