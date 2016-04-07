@@ -10,6 +10,16 @@
 		CC2257411CB622B300D5ADA4 /* SearchMovieModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CC2257401CB622B300D5ADA4 /* SearchMovieModel.m */; };
 		CC2257461CB6247B00D5ADA4 /* SearchMovieCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CC2257441CB6247B00D5ADA4 /* SearchMovieCell.m */; };
 		CC2257471CB6247B00D5ADA4 /* SearchMovieCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC2257451CB6247B00D5ADA4 /* SearchMovieCell.xib */; };
+		CC2257921CB6607600D5ADA4 /* search_icon_search@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CC2257901CB6607600D5ADA4 /* search_icon_search@2x.png */; };
+		CC2257931CB6607600D5ADA4 /* search_icon_search@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = CC2257911CB6607600D5ADA4 /* search_icon_search@3x.png */; };
+		CC2257981CB6608600D5ADA4 /* quick_action_favos@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CC2257941CB6608600D5ADA4 /* quick_action_favos@2x.png */; };
+		CC2257991CB6608600D5ADA4 /* quick_action_favos@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = CC2257951CB6608600D5ADA4 /* quick_action_favos@3x.png */; };
+		CC22579A1CB6608600D5ADA4 /* search_icon_history@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CC2257961CB6608600D5ADA4 /* search_icon_history@2x.png */; };
+		CC22579B1CB6608600D5ADA4 /* search_icon_history@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = CC2257971CB6608600D5ADA4 /* search_icon_history@3x.png */; };
+		CC22579E1CB6615500D5ADA4 /* browser_previous_hl@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CC22579C1CB6615500D5ADA4 /* browser_previous_hl@2x.png */; };
+		CC22579F1CB6615500D5ADA4 /* browser_previous@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CC22579D1CB6615500D5ADA4 /* browser_previous@2x.png */; };
+		CC2257A21CB662B200D5ADA4 /* navi_item_share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CC2257A01CB662B200D5ADA4 /* navi_item_share@2x.png */; };
+		CC2257A31CB662B200D5ADA4 /* navi_item_share@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = CC2257A11CB662B200D5ADA4 /* navi_item_share@3x.png */; };
 		CC8B73B41CB0A6710014F59C /* NewsHeadLinesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CC8B73B31CB0A6710014F59C /* NewsHeadLinesModel.m */; };
 		CC8B73C71CB0AEC00014F59C /* AFShareManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CC8B73C61CB0AEC00014F59C /* AFShareManager.m */; };
 		CC8B73F61CB0BDC40014F59C /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = CC8B73EC1CB0BDC40014F59C /* FMDatabase.m */; };
@@ -123,6 +133,16 @@
 		CC2257431CB6247B00D5ADA4 /* SearchMovieCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchMovieCell.h; sourceTree = "<group>"; };
 		CC2257441CB6247B00D5ADA4 /* SearchMovieCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchMovieCell.m; sourceTree = "<group>"; };
 		CC2257451CB6247B00D5ADA4 /* SearchMovieCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchMovieCell.xib; sourceTree = "<group>"; };
+		CC2257901CB6607600D5ADA4 /* search_icon_search@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search_icon_search@2x.png"; sourceTree = "<group>"; };
+		CC2257911CB6607600D5ADA4 /* search_icon_search@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search_icon_search@3x.png"; sourceTree = "<group>"; };
+		CC2257941CB6608600D5ADA4 /* quick_action_favos@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "quick_action_favos@2x.png"; sourceTree = "<group>"; };
+		CC2257951CB6608600D5ADA4 /* quick_action_favos@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "quick_action_favos@3x.png"; sourceTree = "<group>"; };
+		CC2257961CB6608600D5ADA4 /* search_icon_history@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search_icon_history@2x.png"; sourceTree = "<group>"; };
+		CC2257971CB6608600D5ADA4 /* search_icon_history@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search_icon_history@3x.png"; sourceTree = "<group>"; };
+		CC22579C1CB6615500D5ADA4 /* browser_previous_hl@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "browser_previous_hl@2x.png"; sourceTree = "<group>"; };
+		CC22579D1CB6615500D5ADA4 /* browser_previous@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "browser_previous@2x.png"; sourceTree = "<group>"; };
+		CC2257A01CB662B200D5ADA4 /* navi_item_share@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navi_item_share@2x.png"; sourceTree = "<group>"; };
+		CC2257A11CB662B200D5ADA4 /* navi_item_share@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navi_item_share@3x.png"; sourceTree = "<group>"; };
 		CC8B73B21CB0A6710014F59C /* NewsHeadLinesModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsHeadLinesModel.h; sourceTree = "<group>"; };
 		CC8B73B31CB0A6710014F59C /* NewsHeadLinesModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsHeadLinesModel.m; sourceTree = "<group>"; };
 		CC8B73B81CB0ABE10014F59C /* Common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
@@ -413,6 +433,16 @@
 		CC96478F1CAFF60D009232D9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				CC22579C1CB6615500D5ADA4 /* browser_previous_hl@2x.png */,
+				CC22579D1CB6615500D5ADA4 /* browser_previous@2x.png */,
+				CC2257941CB6608600D5ADA4 /* quick_action_favos@2x.png */,
+				CC2257A01CB662B200D5ADA4 /* navi_item_share@2x.png */,
+				CC2257A11CB662B200D5ADA4 /* navi_item_share@3x.png */,
+				CC2257951CB6608600D5ADA4 /* quick_action_favos@3x.png */,
+				CC2257961CB6608600D5ADA4 /* search_icon_history@2x.png */,
+				CC2257971CB6608600D5ADA4 /* search_icon_history@3x.png */,
+				CC2257901CB6607600D5ADA4 /* search_icon_search@2x.png */,
+				CC2257911CB6607600D5ADA4 /* search_icon_search@3x.png */,
 				CC9647921CAFF60D009232D9 /* AppDelegate.h */,
 				CC9647931CAFF60D009232D9 /* AppDelegate.m */,
 				CC9647901CAFF60D009232D9 /* main.m */,
@@ -879,10 +909,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				CC8B740D1CB0DA430014F59C /* DetailHeaderView.xib in Resources */,
+				CC2257991CB6608600D5ADA4 /* quick_action_favos@3x.png in Resources */,
+				CC2257A31CB662B200D5ADA4 /* navi_item_share@3x.png in Resources */,
 				CCB6F8DE1CB2958600E4A94D /* ComMovieView.xib in Resources */,
 				CCFC34521CB1436500FE1DFB /* FilmReviewsCell.xib in Resources */,
+				CC2257981CB6608600D5ADA4 /* quick_action_favos@2x.png in Resources */,
 				CCB6F8A81CB21DE500E4A94D /* FooterView.xib in Resources */,
+				CC22579E1CB6615500D5ADA4 /* browser_previous_hl@2x.png in Resources */,
 				CCB6F8BB1CB25EF800E4A94D /* FeedsOneCell.xib in Resources */,
+				CC22579B1CB6608600D5ADA4 /* search_icon_history@3x.png in Resources */,
+				CC2257921CB6607600D5ADA4 /* search_icon_search@2x.png in Resources */,
 				CCB6F8B61CB24F2F00E4A94D /* FeedsCell.xib in Resources */,
 				CCFC344D1CB1434E00FE1DFB /* HcmtCell.xib in Resources */,
 				CC9648221CAFF6B1009232D9 /* Info.plist in Resources */,
@@ -890,11 +926,15 @@
 				CC96479F1CAFF60D009232D9 /* LaunchScreen.storyboard in Resources */,
 				CCB6F8971CB1FA4200E4A94D /* ScrollViewCell.xib in Resources */,
 				CC96479C1CAFF60D009232D9 /* Assets.xcassets in Resources */,
+				CC2257A21CB662B200D5ADA4 /* navi_item_share@2x.png in Resources */,
 				CC2257471CB6247B00D5ADA4 /* SearchMovieCell.xib in Resources */,
+				CC2257931CB6607600D5ADA4 /* search_icon_search@3x.png in Resources */,
+				CC22579A1CB6608600D5ADA4 /* search_icon_history@2x.png in Resources */,
 				CC8B74171CB105FB0014F59C /* ActorInfoBtnV.xib in Resources */,
 				CC9A43421CB3B6B20090EE8F /* MovieDetailCell.xib in Resources */,
 				CC9648501CB00924009232D9 /* HotMovieCell.xib in Resources */,
 				CC96479A1CAFF60D009232D9 /* Main.storyboard in Resources */,
+				CC22579F1CB6615500D5ADA4 /* browser_previous@2x.png in Resources */,
 				CCEAAD651CB4CF4400B63D0D /* MoviePlayHeaderView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

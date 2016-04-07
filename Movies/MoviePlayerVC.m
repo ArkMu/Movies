@@ -58,6 +58,7 @@ static NSString *cellIdentifier = @"cell";
         [self loadPlayerView:_videoUrl];
     });
     
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"browser_previous@2x"] style:UIBarButtonItemStylePlain target:self action:@selector(actionBackBarButton)];
 }
 
 - (void)loadData {
@@ -173,6 +174,10 @@ static NSString *cellIdentifier = @"cell";
     [self.view.layer addSublayer:playerLayer];
     
     [_player play];
+}
+
+- (void)actionBackBarButton {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 /*

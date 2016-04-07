@@ -49,8 +49,10 @@ static NSString *cellIdentifier = @"cell";
     
     [self loadData];
     
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"search_icon_search@2x"] style:UIBarButtonItemStylePlain target:self action:@selector(actionOnSearch)];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(actionOnSearch)];
-    
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+
 }
 
 - (void)loadData {
@@ -121,15 +123,14 @@ static NSString *cellIdentifier = @"cell";
     DetailVC *detail = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([DetailVC class])];
     HotMovieModel *model = _listArr[indexPath.row];
     detail.Id = model.Id;
-    [self.navigationController pushViewController:detail animated:YES];
+    [self.navigationController pushViewController:detail animated:NO];
 }
 
 
 - (void)actionOnSearch {
     SearchListVC *list = [self.storyboard instantiateViewControllerWithIdentifier:@"SearchListVC"];
     
-    [self.navigationController pushViewController:list animated:YES];
+    [self.navigationController pushViewController:list animated:NO];
 }
-
 
 @end

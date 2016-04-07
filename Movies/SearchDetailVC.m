@@ -15,11 +15,13 @@
 
 #import "DetailVC.h"
 
-@interface SearchDetailVC () <UITableViewDataSource, UITableViewDelegate>
+@interface SearchDetailVC () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 
 @property (nonatomic, strong) NSMutableArray *resultArr;
+
+@property (nonatomic, strong) UISearchBar *searchBar ;
 
 @end
 
@@ -31,6 +33,14 @@ static NSString *cellIdentifier = @"cell";
     [super viewDidLoad];
     
     [self loadData];
+    
+    _searchBar = [[UISearchBar alloc] init];
+    _searchBar.delegate = self;
+    self.navigationController.navigationBar.translucent = NO;
+    self.navigationItem.titleView = _searchBar;
+    [_searchBar becomeFirstResponder];
+    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"browser_previous@2x"] style:UIBarButtonItemStylePlain target:self action:@selector(actionOnBackBtn)];
     
 }
 
@@ -114,7 +124,7 @@ static NSString *cellIdentifier = @"cell";
                 SearchMovieModel *model = [SearchMovieModel modelWithDictionary:dict];
                 [_resultArr addObject:model];
             }
-            
+
             [self loadTableView];
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             NSLog(@"%@", error);
@@ -179,6 +189,7 @@ static NSString *cellIdentifier = @"cell";
                 [_resultArr addObject:model];
             }
 
+            
             [self loadTableView];
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             NSLog(@"%@", error);
@@ -244,6 +255,78 @@ static NSString *cellIdentifier = @"cell";
     detail.Id = model.Id;
     
     [self.navigationController pushViewController:detail animated:YES];
+}
+
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+//- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+//    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+//    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+//    
+//    NSDictionary *parameter = @{@"Host":@"api.meituan.com",
+//                                @"Connection":@"Keep-Alive",
+//                                //                                @"Content-Type":@"application/json;charse=UTF-8",
+//                                @"Accept-Encoding":@"gzip",
+//                                @"__skcy":@"9I6Zq0K0OPwzuwnheP1GWkOrA2s=",
+//                                @"__skua":@"7e01cf8dd30a179800a7a93979b430b2",
+//                                @"__skno":@"bf67ec63-2586-4e5a-9cc4-120c758dc137",
+//                                @"__skck":@"6a375bce8c66a0dc293860dfa83833ef",
+//                                @"__skts":@"1460003896416",
+//                                @"User-Agent":@"AiMovie /SEMC-4.1.2-LT26ii_1266-9060-1280x720-320-6.6.0-6601-353617055672400-qihu360-dy"
+//                                };
+//    
+//    NSString *str = [NSString stringWithFormat:@"http://api.meituan.com/mmdb/search/integrated/keyword/list.json?keyword=\%@&stype=-1&refer=3&iscorrected=false&limit=10&offset=0&token=&__vhost=api.maoyan.com&utm_campaign=AmovieBmovieCD-1&movieBundleVersion=6601&utm_source=qihu360-dy&utm_medium=android&utm_term=6.6.0&utm_content=353617055672400&ci=73&net=255&dModel=LT26ii&uuid=587CEF31FE587F2FDEB7EA51D16D4D7C3165B08724FB309D1056B5BED71757FD&lat=34.819283&lng=113.564313", _searchStr];
+//    
+//    NSString *str1 = [str stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+//    
+//    [manager GET:str1 parameters:parameter progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+//        NSLog(@"%@", responseObject);
+//        
+//        [self.tableView reloadData];
+//    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+//        NSLog(@"%@", error);
+//    }];
+//}
+
+- (void)actionOnBackBtn {
+    [self.navigationController popViewControllerAnimated:NO];
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    if (_searchBar.text.length == 0) {
+        return;
+    }
+    
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        manager.requestSerializer = [AFJSONRequestSerializer serializer];
+        manager.responseSerializer = [AFJSONResponseSerializer serializer];
+        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", nil];
+    
+    
+        NSString *str = [NSString stringWithFormat:@"http://api.meituan.com/mmdb/search/integrated/keyword/list.json?keyword=\%@&stype=-1&refer=1&iscorrected=false&limit=10&offset=0&token=&__vhost=api.maoyan.com&utm_campaign=AmovieBmovieCD-1&movieBundleVersion=6601&utm_source=qihu360-dy&utm_medium=android&utm_term=6.6.0&utm_content=353617055672400&ci=73&net=0&dModel=LT26ii&uuid=587CEF31FE587F2FDEB7EA51D16D4D7C3165B08724FB309D1056B5BED71757FD&lat=34.819328&lng=113.564276",_searchBar.text];
+    
+    
+        NSString *str1 = [str stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+    
+//        NSString *str2 = [str stringByAppendingString:@"&__skck=6a375bce8c66a0dc293860dfa83833ef&__skts=1460037176796&__skua=7e01cf8dd30a179800a7a93979b430b2&__skno=6478cbce-cbdb-4891-ae32-be6e988cd459&__skcy=iazvqXeSMkphadlRPaDWbDCfN1k%3D"];
+    
+        [manager GET:str1 parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            NSLog(@"%@", responseObject);
+            NSDictionary *resultDict = (NSDictionary *)responseObject;
+            NSArray *arr = resultDict[@"data"];
+            NSArray *arr1 = arr[0][@"list"];
+            for (NSDictionary *dict in arr1) {
+                SearchMovieModel *model = [SearchMovieModel modelWithDictionary:dict];
+                [_resultArr addObject:model];
+            }
+            
+            [self loadTableView];
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            NSLog(@"%@", error);
+        }];
 }
 
 /*

@@ -199,7 +199,7 @@ static NSString *oneImgIdentifier = @"one";
     }
     
     FeedsModel *model = _feedCellArr[indexPath.row];
-    if (model.imageArr.count == 1) {
+    if (model.imageArr.count < 3) {
         FeedsOneCell *cell = [tableView dequeueReusableCellWithIdentifier:oneImgIdentifier];
         cell.model = model;
         return cell;
@@ -236,7 +236,7 @@ static NSString *oneImgIdentifier = @"one";
         
 
         
-        [self.navigationController pushViewController:web animated:YES];
+        [self.navigationController pushViewController:web animated:NO];
     };
     return view;
 }

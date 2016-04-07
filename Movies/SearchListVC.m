@@ -14,9 +14,12 @@
 
 #import "AFHTTPSessionManager.h"
 
+#import "SearchMovieModel.h"
+#import "SearchMovieCell.h"
+
 #import "Common.h"
 
-@interface SearchListVC () <UITableViewDataSource, UITableViewDelegate>
+@interface SearchListVC () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
 
 @property (nonatomic, strong) NSMutableArray *hotArr;
 
@@ -27,6 +30,12 @@
 @property (nonatomic, strong) UITableView *tableView;
 
 @property (nonatomic, strong) NSMutableArray *searchArr;
+
+//@property (nonatomic, strong) UISearchController *searchControl;
+
+@property (nonatomic, strong) UISearchBar *searchBar;
+
+@property (nonatomic, strong) NSMutableArray *resultArr;
 
 @end
 
@@ -43,6 +52,8 @@ static NSString *cellIdentifier = @"cell";
     
     _searchArr = [NSMutableArray array];
     
+    _resultArr = [NSMutableArray array];
+    
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
     [manager GET:@"http://api.meituan.com/mmdb/search/movie/hotword/list.json?token=&__vhost=api.maoyan.com&utm_campaign=AmovieBmovieCD-1&movieBundleVersion=6601&utm_source=qihu360-dy&utm_medium=android&utm_term=6.6.0&utm_content=353617055672400&ci=73&net=255&dModel=LT26ii&uuid=587CEF31FE587F2FDEB7EA51D16D4D7C3165B08724FB309D1056B5BED71757FD&lat=34.819339&lng=113.564432&__skck=6a375bce8c66a0dc293860dfa83833ef&__skts=1459943354790&__skua=7e01cf8dd30a179800a7a93979b430b2&__skno=f45a65db-3655-4919-a3ac-beb2f64a1d02&__skcy=AYL94k1UI%2BQLAhbBG9apRgCYRMU%3D" parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -57,7 +68,19 @@ static NSString *cellIdentifier = @"cell";
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@", error);
     }];
-
+    
+    _searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width - 50, 44)];
+    _searchBar.delegate = self;
+    self.navigationItem.titleView = _searchBar;
+    
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame = CGRectMake(0, 0, 40, 44);
+    [btn setTitle:@"取消" forState:UIControlStateNormal];
+    btn.titleLabel.font = [UIFont systemFontOfSize:14.0];
+    [btn addTarget:self action:@selector(actionOnCancelBtnTap) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
+    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"browser_previous@2x"] style:UIBarButtonItemStylePlain target:self action:@selector(actionOnBackBtn)];
     
 }
 
@@ -196,6 +219,74 @@ static NSString *cellIdentifier = @"cell";
     [self.navigationController pushViewController:detail animated:YES];
 }
 
+#pragma mark - UISearchBarDelegate
+
+- (void)actionOnBackBtn {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)actionOnCancelBtnTap {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
+    SearchDetailVC *detail = [self.storyboard instantiateViewControllerWithIdentifier:@"SearchDetailVC"];
+    [self.navigationController pushViewController:detail animated:NO];
+    return NO;
+}
+
+//- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+//    SearchDetailVC *detail = [self.storyboard instantiateViewControllerWithIdentifier:@"SearchDetailVC"];
+////    detail.searchArr = _resultArr;
+//    
+//    [self.navigationController pushViewController:detail animated:YES];
+//    
+////    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+////    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+////    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+////    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", nil];
+////    
+//////    NSDictionary *parameter = @{//@"Host":@"api.meituan.com",
+//////                                //@"Connection":@"Keep-Alive",
+//////                                //@"Accept-Encoding":@"gzip",
+//////                                @"__skcy":@"iazvqXeSMkphadlRPaDWbDCfN1k=",
+//////                                @"__skua":@"7e01cf8dd30a179800a7a93979b430b2",
+//////                                @"__skno":@"6478cbce-cbdb-4891-ae32-be6e988cd459",
+//////                                @"__skck":@"6a375bce8c66a0dc293860dfa83833ef",
+//////                                @"__skts":@"1460037176796",
+//////                                //@"User-Agent":@"AiMovie /SEMC-4.1.2-LT26ii_1266-9060-1280x720-320-6.6.0-6601-353617055672400-qihu360-dy"
+//////                                };
+////    
+////    NSString *str = [NSString stringWithFormat:@"http://api.meituan.com/mmdb/search/integrated/keyword/list.json?keyword=\%@&stype=-1&refer=1&iscorrected=false&limit=10&offset=0&token=&__vhost=api.maoyan.com&utm_campaign=AmovieBmovieCD-1&movieBundleVersion=6601&utm_source=qihu360-dy&utm_medium=android&utm_term=6.6.0&utm_content=353617055672400&ci=73&net=0&dModel=LT26ii&uuid=587CEF31FE587F2FDEB7EA51D16D4D7C3165B08724FB309D1056B5BED71757FD&lat=34.819328&lng=113.564276",_searchBar.text];
+////    
+////    
+////    NSString *str1 = [str stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+////    
+////    NSString *str2 = [str stringByAppendingString:@"&__skck=6a375bce8c66a0dc293860dfa83833ef&__skts=1460037176796&__skua=7e01cf8dd30a179800a7a93979b430b2&__skno=6478cbce-cbdb-4891-ae32-be6e988cd459&__skcy=iazvqXeSMkphadlRPaDWbDCfN1k%3D"];
+////    
+////    [manager GET:str1 parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+////        NSLog(@"%@", responseObject);
+////        NSDictionary *resultDict = (NSDictionary *)responseObject;
+////        NSArray *arr = resultDict[@"data"];
+////        NSArray *arr1 = arr[0][@"list"];
+////        for (NSDictionary *dict in arr1) {
+////            SearchMovieModel *model = [SearchMovieModel modelWithDictionary:dict];
+////            [_resultArr addObject:model];
+////        }
+////        
+////        SearchDetailVC *detail = [self.storyboard instantiateViewControllerWithIdentifier:@"SearchDetailVC"];
+////        detail.searchArr = _resultArr;
+////        
+////        [self.navigationController pushViewController:detail animated:YES];
+//////        [_tableView reloadData];
+////    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+////        NSLog(@"%@", error);
+////    }];
+//    
+//    
+//    
+////    http://api.meituan.com/mmdb/search/integrated/keyword/list.json?keyword=%E4%B8%9C&stype=-1&refer=1&iscorrected=false&limit=10&offset=0&token=&__vhost=api.maoyan.com&utm_campaign=AmovieBmovieCD-1&movieBundleVersion=6601&utm_source=qihu360-dy&utm_medium=android&utm_term=6.6.0&utm_content=353617055672400&ci=73&net=0&dModel=LT26ii&uuid=587CEF31FE587F2FDEB7EA51D16D4D7C3165B08724FB309D1056B5BED71757FD&lat=34.819328&lng=113.564276&__skck=6a375bce8c66a0dc293860dfa83833ef&__skts=1460037176796&__skua=7e01cf8dd30a179800a7a93979b430b2&__skno=6478cbce-cbdb-4891-ae32-be6e988cd459&__skcy=iazvqXeSMkphadlRPaDWbDCfN1k%3D
+//}
 
 /*
 #pragma mark - Navigation
