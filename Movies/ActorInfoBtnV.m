@@ -26,7 +26,14 @@
 - (void)setModel:(ActorModel *)model {
     _model = model;
     
-    [_avatarImgView sd_setImageWithURL:[NSURL URLWithString:_model.avatar] placeholderImage:nil];
+//    http://p0.meituan.net/w.h/movie/6fa0e6b60153583959ab9ecf97e6cf2e34079.jpg
+    
+    NSString *str1 = [model.avatar substringWithRange:NSMakeRange(0, 22)];
+    NSString *str2 = [model.avatar substringWithRange:NSMakeRange(26, model.avatar.length - 26)];
+    
+    NSString *urlStr = [str1 stringByAppendingString:str2];
+    
+    [_avatarImgView sd_setImageWithURL:[NSURL URLWithString:urlStr] placeholderImage:nil];
     _cnmLabel.text = model.cnm;
     _rolesLabel.text = [NSString stringWithFormat:@"饰:%@", model.roles];
 }

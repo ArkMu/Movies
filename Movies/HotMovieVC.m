@@ -6,7 +6,7 @@
 //  Copyright © 2016年 qingyun. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "HotMovieVC.h"
 
 //#import "AFShareManager.h"
 #import "AFHTTPSessionManager.h"
@@ -17,7 +17,9 @@
 
 #import "DetailVC.h"
 
-@interface ViewController () <UITableViewDataSource, UITableViewDelegate>
+#import "SearchListVC.h"
+
+@interface HotMovieVC () <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 
@@ -27,7 +29,7 @@
 
 @end
 
-@implementation ViewController
+@implementation HotMovieVC
 
 static NSString *cellIdentifier = @"cell";
 
@@ -46,6 +48,9 @@ static NSString *cellIdentifier = @"cell";
     }
     
     [self loadData];
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(actionOnSearch)];
+    
 }
 
 - (void)loadData {
@@ -119,6 +124,12 @@ static NSString *cellIdentifier = @"cell";
     [self.navigationController pushViewController:detail animated:YES];
 }
 
+
+- (void)actionOnSearch {
+    SearchListVC *list = [self.storyboard instantiateViewControllerWithIdentifier:@"SearchListVC"];
+    
+    [self.navigationController pushViewController:list animated:YES];
+}
 
 
 @end

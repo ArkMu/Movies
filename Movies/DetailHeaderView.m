@@ -33,7 +33,14 @@
 - (void)setModel:(MovieModel *)model {
     _model = model;
     
-    [_imgView sd_setImageWithURL:[NSURL URLWithString:model.img] placeholderImage:nil];
+//    http://p1.meituan.net/w.h/movie/c53f0fdc271235ad365c749c461119fc80728.jpg
+    
+    NSString *str1 = [model.img substringWithRange:NSMakeRange(0, 22)];
+    NSString *str2 = [model.img substringWithRange:NSMakeRange(26, model.img.length - 26)];
+    
+    NSString *urlStr = [str1 stringByAppendingString:str2];
+    
+    [_imgView sd_setImageWithURL:[NSURL URLWithString:urlStr] placeholderImage:nil];
     _nmLabel.text = model.nm;
     _enmLabel.text = model.enm;
     _scLabel.text = [NSString stringWithFormat:@"%.1f", model.sc];

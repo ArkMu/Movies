@@ -11,13 +11,19 @@
 #import "ListModel.h"
 
 #import "ComingModel.h"
+#import "HotMovieModel.h"
 #import "ComMovieView.h"
 
-#import "HotMovieCell.h"
+//#import "HotMovieCell.h"
+#import "MovieDetailCell.h"
 
 #import "AFHTTPSessionManager.h"
 #import "UIImageView+WebCache.h"
 #import "Masonry.h"
+
+#import "DetailVC.h"
+
+#import "MoviePlayerVC.h"
 
 @interface ComboVC () <UITableViewDataSource, UITableViewDelegate>
 
@@ -40,8 +46,9 @@ static NSString *movieIdentidier = @"movie";
     [super viewDidLoad];
        
     [self loadData];
-
     
+    self.navigationController.navigationBar.translucent = NO;
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -120,7 +127,7 @@ static NSString *movieIdentidier = @"movie";
         
         _movieArr = [NSMutableArray array];
         for (NSDictionary *dict in data) {
-            ComingModel *model = [ComingModel modelWithDictionary:dict];
+            HotMovieModel *model = [HotMovieModel modelWithDictionary:dict];
             [_movieArr addObject:model];
         }
         
@@ -131,13 +138,17 @@ static NSString *movieIdentidier = @"movie";
 }
 
 - (void)loadTableView {
+    if (_tableView) {
+        [_tableView reloadData];
+        return;
+    }
     _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     _tableView.dataSource = self;
     _tableView.delegate = self;
     [self.view addSubview:_tableView];
     
     [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:cellIdentifier];
-    [_tableView registerNib:[UINib nibWithNibName:NSStringFromClass([HotMovieCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:movieIdentidier];
+    [_tableView registerNib:[UINib nibWithNibName:NSStringFromClass([MovieDetailCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:movieIdentidier];
 }
 
 
@@ -168,6 +179,13 @@ static NSString *movieIdentidier = @"movie";
     if (indexPath.section == 0) {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         
+        
+        for (UIView *view in cell.contentView.subviews) {
+            if ([view isKindOfClass:[UIScrollView class]]) {
+                [view removeFromSuperview];
+            }
+        }
+        
         UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:cell.bounds];
         
         NSInteger count = _listArr.count;
@@ -180,44 +198,43 @@ static NSString *movieIdentidier = @"movie";
         for (int i = 0; i < count; i++) {
             ListModel *model = _listArr[i];
             UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(165 * i + 15, 0, 150, 100)];
-            NSLog(@"%@", model.img);
             
-            AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-//            manager.responseSerializer.acceptableContentTypes = ;
-            
-            [manager GET:@"http://p0.meituan.net/movie/ade9645dabf38456af26692e2323849938592.jpg" parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                UIImage *image = [[UIImage alloc] initWithData:responseObject];
-                imgView.image = image;
-            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                NSLog(@"%@", error);
-            }];
+            [view addSubview:imgView];
             
             [imgView sd_setImageWithURL:[NSURL URLWithString:model.img] placeholderImage:nil];
+
             
             UILabel *movieNameLabel = [[UILabel alloc] init];
             movieNameLabel.text = model.movieName;
             movieNameLabel.textColor = [UIColor blackColor];
-            movieNameLabel.font = [UIFont systemFontOfSize:12.0];
-            [view addSubview:movieNameLabel];
+            movieNameLabel.font = [UIFont boldSystemFontOfSize:12.0];
+            movieNameLabel.textColor = [UIColor whiteColor];
+            [imgView addSubview:movieNameLabel];
             
             UILabel *originName = [[UILabel alloc] init];
             originName.text = model.originName;
             originName.textColor = [UIColor blackColor];
-            originName.font = [UIFont systemFontOfSize:12.0];
-            [view addSubview:originName];
+            originName.font = [UIFont boldSystemFontOfSize:12.0];
+            originName.textColor = [UIColor colorWithWhite:1.0 alpha:1.0];
+            [imgView addSubview:originName];
             
             [originName mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.leading.mas_equalTo(8);
-                make.trailing.mas_equalTo(8);
-                make.bottom.mas_equalTo(-8);
+                make.leading.mas_equalTo(4);
+                make.trailing.mas_equalTo(4);
+                make.bottom.mas_equalTo(-4);
             }];
             
             [movieNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.leading.mas_equalTo(8);
+                make.leading.mas_equalTo(4);
                 make.trailing.mas_equalTo(20);
-                make.bottom.mas_equalTo(originName.mas_top).with.offset(-8);
+                make.bottom.mas_equalTo(originName.mas_top).with.offset(-4);
             }];
+            
+            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(actionOnListBtnTap:)];
+            [imgView addGestureRecognizer:tap];
+            imgView.userInteractionEnabled = YES;
         }
+        
         
         [cell.contentView addSubview:scrollView];
         [scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -229,6 +246,12 @@ static NSString *movieIdentidier = @"movie";
     }
     if (indexPath.section == 1) {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        
+        for (UIView *view in cell.contentView.subviews) {
+            if ([view isKindOfClass:[UIScrollView class]]) {
+                [view removeFromSuperview];
+            }
+        }
         
         UIScrollView *scrollView = [[UIScrollView alloc] init];
         
@@ -244,9 +267,13 @@ static NSString *movieIdentidier = @"movie";
             CView.model = _commingMovieArr[i];
             CView.frame = CGRectMake(100 * i + 15, 0, 85, 150);
             
+            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(actionOnComMovieBtnTap:)];
+            [CView addGestureRecognizer:tap];
+            CView.userInteractionEnabled = YES;
+            
             [view addSubview:CView];
         }
-        scrollView.backgroundColor = [UIColor redColor];
+        //scrollView.backgroundColor = [UIColor redColor];
         [cell.contentView addSubview:scrollView];
         
         [scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -256,9 +283,52 @@ static NSString *movieIdentidier = @"movie";
         return cell;
     }
     
-    HotMovieCell *cell = [tableView dequeueReusableCellWithIdentifier:movieIdentidier];
+    MovieDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:movieIdentidier];
+    
+    for (UIView *view in cell.subviews) {
+        if ([view isKindOfClass:[UIScrollView class]]) {
+            [view removeFromSuperview];
+        }
+    }
+    
     cell.model = _movieArr[indexPath.row];
     return cell;
+}
+
+// list的点击事件
+- (void)actionOnListBtnTap:(UITapGestureRecognizer *)tap {
+//    http://v.meituan.net/movie/videos/5cb17cd6b8c6467ebd6cf89216d0cfd4.mp4
+    
+    MoviePlayerVC *player = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MoviePlayerVC class])];
+    
+    UIImageView *imgView = (UIImageView *)tap.view;
+    NSInteger inter = (imgView.frame.origin.x - 15) / 165;
+    
+    ListModel *model = _listArr[inter];
+    player.videoUrl = model.url;
+    
+    [self.navigationController pushViewController:player animated:YES];
+}
+
+
+
+// commovie 的点击事件
+- (void)actionOnComMovieBtnTap:(UITapGestureRecognizer *)tap {
+    DetailVC *detail = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailVC"];
+    
+    ComMovieView *view = (ComMovieView *)tap.view;
+    detail.Id = view.model.Id;
+    
+    [self.navigationController pushViewController:detail animated:YES];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    HotMovieModel *model = _movieArr[indexPath.row];
+    
+    DetailVC *detail = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([DetailVC class])];
+    detail.Id = model.Id;
+    
+    [self.navigationController pushViewController:detail animated:YES];
 }
 
 

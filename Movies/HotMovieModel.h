@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+
 @interface HotMovieModel : NSObject
 
 @property (nonatomic, strong) NSString *cat;
@@ -25,7 +26,7 @@
 @property (nonatomic, assign) BOOL late;
 @property (nonatomic, assign) NSInteger localPubSt;
 @property (nonatomic, assign) float mk;
-@property (nonatomic, strong) NSArray *newsHeadlines;
+@property (nonatomic, strong) NSArray *newsHeadline;
 @property (nonatomic, strong) NSString *nm;
 @property (nonatomic, assign) NSInteger pn;
 @property (nonatomic, assign) NSInteger preSale;

@@ -51,6 +51,9 @@
     ScrollViewModel *model = _modelArr[_currentIndex];
     
 //    NSString *regExString = @"meituanmovie"
+//    meituanmovie://www.meituan.com/forum/postDetail?postID=94593
+    
+//    http://api.meituan.com/sns/topic/94593.json?__vhost=api.maoyan.com&utm_campaign=AmovieBmovieCD-1&movieBundleVersion=6601&utm_source=qihu360-dy&utm_medium=android&utm_term=6.6.0&utm_content=353617055672400&ci=73&net=255&dModel=LT26ii&uuid=587CEF31FE587F2FDEB7EA51D16D4D7C3165B08724FB309D1056B5BED71757FD&lat=34.819315&lng=113.564283&__skck=6a375bce8c66a0dc293860dfa83833ef&__skts=1459864028118&__skua=7e01cf8dd30a179800a7a93979b430b2&__skno=a740f5e9-4b89-4a12-93b7-2e2ec17a4a90&__skcy=gUDAhqRDbikC%2BM7EGURABV13ONA%3D
     
     if (_gotoWebView) {
         _gotoWebView(model.url);

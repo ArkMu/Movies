@@ -12,28 +12,28 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="120"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OJs-VW-240">
+                <button opaque="NO" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OJs-VW-240">
                     <rect key="frame" x="8" y="12" width="70" height="96"/>
                     <state key="normal" title="Button"/>
                     <connections>
                         <action selector="ActionOnBtn:" destination="iN0-l3-epB" eventType="touchUpInside" id="YV3-D0-4SH"/>
                     </connections>
                 </button>
-                <button opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="om1-Ap-zin">
+                <button opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="om1-Ap-zin">
                     <rect key="frame" x="86" y="12" width="70" height="96"/>
                     <state key="normal" title="Button"/>
                     <connections>
                         <action selector="ActionOnBtn:" destination="iN0-l3-epB" eventType="touchUpInside" id="ocP-jp-XTk"/>
                     </connections>
                 </button>
-                <button opaque="NO" tag="102" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NHk-Or-TmV">
+                <button opaque="NO" tag="102" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NHk-Or-TmV">
                     <rect key="frame" x="164" y="12" width="70" height="96"/>
                     <state key="normal" title="Button"/>
                     <connections>
                         <action selector="ActionOnBtn:" destination="iN0-l3-epB" eventType="touchUpInside" id="cbu-zn-Sie"/>
                     </connections>
                 </button>
-                <button opaque="NO" tag="103" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3wm-mK-iQd">
+                <button opaque="NO" tag="103" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3wm-mK-iQd">
                     <rect key="frame" x="242" y="12" width="70" height="96"/>
                     <state key="normal" title="Button"/>
                     <connections>

@@ -34,6 +34,7 @@
     _timeLabel.text = [model.time substringWithRange:NSMakeRange(5, 5)];
     _contentLabel.text = model.content;
     [_avatarImg sd_setImageWithURL:[NSURL URLWithString:model.avatarurl] placeholderImage:nil];
+    _avatarImg.backgroundColor = [UIColor redColor];
     _avatarImg.layer.cornerRadius = 20;
     _avatarImg.layer.masksToBounds = YES;
     _nickLabel.text = model.nick;

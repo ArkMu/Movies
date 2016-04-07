@@ -32,11 +32,19 @@
 - (void)setModel:(HotMovieModel *)model {
     _model = model;
     
-    [_imgView sd_setImageWithURL:[NSURL URLWithString:model.img] placeholderImage:nil];
+//    http://p1.meituan.net/w.h/movie/4f06d5b4989902305bae7992ba2297e9162007.jpg
+    
+    NSString *str1 = [model.img substringWithRange:NSMakeRange(0, 22)];
+    NSString *str2 = [model.img substringWithRange:NSMakeRange(26, model.img.length - 26)];
+    
+    NSString *urlStr = [str1 stringByAppendingString:str2];
+    
+    [_imgView sd_setImageWithURL:[NSURL URLWithString:urlStr] placeholderImage:nil];
     _nmLabel.text = model.nm;
     _scmLabel.text = model.scm;
     _mkLabel.text = [NSString stringWithFormat:@"%.1f", model.mk];
     _showInfoLabel.text = model.showInfo;
+    
     
     FMDBShare *share = [FMDBShare shareDataBase];
     if (![[share selectFromTableWithId:model.Id] count]) {  // 如果没有找到 则将该model插入到数据库

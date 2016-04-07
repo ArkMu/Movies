@@ -116,7 +116,8 @@ static NSString *filmIdentifier = @"film";
         NSDictionary *dict = (NSDictionary *)responseObject;
         _MModel = [MovieModel modelWithDictionary:dict[@"data"][@"movie"]];
         
-        NSLog(@"%@", responseObject);
+        [self loadTableView];
+//        NSLog(@"%@", responseObject);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@", error);
     }];
@@ -139,8 +140,8 @@ static NSString *filmIdentifier = @"film";
             [_AMArr addObject:marr];
         }
 
-        
-        NSLog(@"%@", responseObject);
+        [self loadTableView];
+//        NSLog(@"%@", responseObject);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@", error);
     }];
@@ -151,7 +152,7 @@ static NSString *filmIdentifier = @"film";
     [manager GET:hcmtUrl parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"%@", responseObject);
         NSDictionary *dict = (NSDictionary *)responseObject;
-        NSArray *arr = dict[@"hcmts"];
+        NSArray *arr = dict[@"cmts"];
         
         _HcmtArr = [NSMutableArray array];
         for (NSDictionary *dict in arr) {
@@ -163,6 +164,7 @@ static NSString *filmIdentifier = @"film";
             
         }
         
+        [self loadTableView];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@", error);
     }];
@@ -207,6 +209,20 @@ static NSString *filmIdentifier = @"film";
 }
 
 - (void)loadTableView {
+    if (_tableView) {
+//        if (_tableView.tableHeaderView == nil) {
+        
+        //???????如何刷新头视图
+            DetailHeaderView *headerView = [[NSBundle mainBundle] loadNibNamed:NSStringFromClass([DetailHeaderView class]) owner:nil options:nil][0];
+            headerView.model = _MModel;
+            //    headerView.backgroundColor = [UIColor colorWithWhite:0.4 alpha:0.5];
+            _tableView.tableHeaderView = headerView;
+            _tableView.backgroundColor = [UIColor colorWithWhite:0.6 alpha:0.4];
+//        }
+        [_tableView reloadData];
+        return;
+    }
+    
     _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     _tableView.dataSource = self;
     _tableView.delegate = self;
@@ -260,6 +276,12 @@ static NSString *filmIdentifier = @"film";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         UIScrollView *scrollView = [[UIScrollView alloc] init];
         
+        for (UIView *view in cell.contentView.subviews) {
+            if ([view isKindOfClass:[UIScrollView class]]) {
+                [view removeFromSuperview];
+            }
+        }
+        
         // 求所有元素的个数
         NSInteger count = 0;
         NSMutableArray *actorDetailArr = [NSMutableArray array];
@@ -294,6 +316,7 @@ static NSString *filmIdentifier = @"film";
     
     if (indexPath.section == 2) {
         HcmtCell *cell = [tableView dequeueReusableCellWithIdentifier:hcmtIdentifier];
+        
         cell.model = _HcmtArr[indexPath.row];
         return cell;
     }

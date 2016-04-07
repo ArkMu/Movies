@@ -75,7 +75,7 @@
                     <state key="normal" title="想看"/>
                 </button>
             </subviews>
-            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="0.095760680735111237" green="0.5996742844581604" blue="0.4273885190486908" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="Fng-kA-rX8" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="-20" id="3z9-Rk-YQM"/>
                 <constraint firstItem="lcS-5c-1H6" firstAttribute="top" relation="greaterThanOrEqual" secondItem="daC-4H-zAG" secondAttribute="bottom" constant="4" id="4iS-tW-6rf"/>
