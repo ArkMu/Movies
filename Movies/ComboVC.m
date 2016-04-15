@@ -49,6 +49,7 @@ static NSString *movieIdentidier = @"movie";
     
     self.navigationController.navigationBar.translucent = NO;
 
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"search_icon_search@3x"] style:UIBarButtonItemStylePlain target:self action:@selector(actionOnBackBarBtnTaped)];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -331,6 +332,9 @@ static NSString *movieIdentidier = @"movie";
     [self.navigationController pushViewController:detail animated:YES];
 }
 
+- (void)actionOnBackBarBtnTaped {
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 /*
 #pragma mark - Navigation

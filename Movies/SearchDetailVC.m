@@ -54,7 +54,7 @@ static NSString *cellIdentifier = @"cell";
     
     NSDictionary *parameter = @{@"Host":@"api.meituan.com",
                                 @"Connection":@"Keep-Alive",
-//                                @"Content-Type":@"application/json;charse=UTF-8",
+                                @"Content-Type":@"application/json;charse=UTF-8",
                                 @"Accept-Encoding":@"gzip",
                                 @"__skcy":@"9I6Zq0K0OPwzuwnheP1GWkOrA2s=",
                                 @"__skua":@"7e01cf8dd30a179800a7a93979b430b2",
@@ -65,10 +65,6 @@ static NSString *cellIdentifier = @"cell";
                                 };
     
     if (_section == 1) {
-        
-//http://api.meituan.com/mmdb/search/integrated/keyword/list.json?keyword=%E9%AD%94%E5%85%BD&stype=-1&refer=3&iscorrected=false&limit=10&offset=0&token=&__vhost=api.maoyan.com&utm_campaign=AmovieBmovieCD-1&movieBundleVersion=6601&utm_source=qihu360-dy&utm_medium=android&utm_term=6.6.0&utm_content=353617055672400&ci=73&net=255&dModel=LT26ii&uuid=587CEF31FE587F2FDEB7EA51D16D4D7C3165B08724FB309D1056B5BED71757FD&lat=34.819283&lng=113.564313&__skck=6a375bce8c66a0dc293860dfa83833ef&__skts=1459947396764&__skua=7e01cf8dd30a179800a7a93979b430b2&__skno=8182dc60-890b-4fca-80f4-92dae1ce9a35&__skcy=v30a%2BsTlpQgMHc8QfBIptSw9HOw%3D
-        
-//        http://api.meituan.com/mmdb/search/integrated/keyword/list.json?keyword=%E6%AD%BB%E4%BE%8D&stype=-1&refer=3&iscorrected=false&limit=10&offset=0&token=&__vhost=api.maoyan.com&utm_campaign=AmovieBmovieCD-1&movieBundleVersion=6601&utm_source=qihu360-dy&utm_medium=android&utm_term=6.6.0&utm_content=353617055672400&ci=73&net=255&dModel=LT26ii&uuid=587CEF31FE587F2FDEB7EA51D16D4D7C3165B08724FB309D1056B5BED71757FD&lat=34.819319&lng=113.564324&__skck=6a375bce8c66a0dc293860dfa83833ef&__skts=1460000135455&__skua=7e01cf8dd30a179800a7a93979b430b2&__skno=59f6b36b-c69c-4b4b-a908-c8b2bab994d7&__skcy=GQbGXm0AMvSy7DussgXJupX1Hf8%3D
         
         NSString *str = [NSString stringWithFormat:@"http://api.meituan.com/mmdb/search/integrated/keyword/list.json?keyword=\%@&stype=-1&refer=3&iscorrected=false&limit=10&offset=0&token=&__vhost=api.maoyan.com&utm_campaign=AmovieBmovieCD-1&movieBundleVersion=6601&utm_source=qihu360-dy&utm_medium=android&utm_term=6.6.0&utm_content=353617055672400&ci=73&net=255&dModel=LT26ii&uuid=587CEF31FE587F2FDEB7EA51D16D4D7C3165B08724FB309D1056B5BED71757FD&lat=34.819283&lng=113.564313", _searchStr];
         
@@ -96,8 +92,6 @@ static NSString *cellIdentifier = @"cell";
 //                                     @"__skck":@"6a375bce8c66a0dc293860dfa83833ef",
 //                                     @"__skts":@"1460000541830"
 //                                     };
-        
-//        http://api.meituan.com/mmdb/search/integrated/keyword/list.json?keyword=%E6%AD%BB%E4%BE%8D&stype=-1&refer=3&iscorrected=false&limit=10&offset=0&token=&__vhost=api.maoyan.com&utm_campaign=AmovieBmovieCD-1&movieBundleVersion=6601&utm_source=qihu360-dy&utm_medium=android&utm_term=6.6.0&utm_content=353617055672400&ci=73&net=255&dModel=LT26ii&uuid=587CEF31FE587F2FDEB7EA51D16D4D7C3165B08724FB309D1056B5BED71757FD&lat=34.819319&lng=113.564324&__skck=6a375bce8c66a0dc293860dfa83833ef&__skts=1460001169071&__skua=7e01cf8dd30a179800a7a93979b430b2&__skno=c611f2d3-f944-4001-977f-92b73d3a53fb&__skcy=jbJaF8hyXLKgzaUPdDeN6lgaeaI%3D
         
         NSString *str2;
         if ([_searchStr isEqualToString:@"魔兽"]) {
@@ -254,12 +248,12 @@ static NSString *cellIdentifier = @"cell";
     SearchMovieModel *model = _resultArr[indexPath.row];
     detail.Id = model.Id;
     
-    [self.navigationController pushViewController:detail animated:YES];
+    [self.navigationController pushViewController:detail animated:NO];
 }
 
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:NO];
 }
 
 //- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
@@ -318,6 +312,7 @@ static NSString *cellIdentifier = @"cell";
             NSDictionary *resultDict = (NSDictionary *)responseObject;
             NSArray *arr = resultDict[@"data"];
             NSArray *arr1 = arr[0][@"list"];
+            [_resultArr removeAllObjects];
             for (NSDictionary *dict in arr1) {
                 SearchMovieModel *model = [SearchMovieModel modelWithDictionary:dict];
                 [_resultArr addObject:model];
@@ -329,14 +324,5 @@ static NSString *cellIdentifier = @"cell";
         }];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

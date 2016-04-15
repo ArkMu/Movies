@@ -51,7 +51,9 @@ static NSString *cellIdentifier = @"cell";
     
     [self loadData];
     
-    self.navigationController.navigationBar.translucent = YES;
+    self.hidesBottomBarWhenPushed = YES;
+    
+    self.navigationController.navigationBar.translucent = NO;
     self.navigationController.navigationBar.tintColor = [UIColor clearColor];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -99,7 +101,7 @@ static NSString *cellIdentifier = @"cell";
 }
 
 - (void)loadTableView {
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 200, self.view.frame.size.width, self.view.frame.size.height - 100) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 200, self.view.frame.size.width, self.view.frame.size.height ) style:UITableViewStylePlain];
     
     _tableView.dataSource = self;
     _tableView.delegate = self;

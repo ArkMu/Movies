@@ -89,4 +89,21 @@
 
 - (IBAction)whishToLook:(UIButton *)sender {
 }
+
+- (IBAction)actionOnBtnTop:(UIButton *)sender {
+//    meituanmovie://www.meituan.com/forum/postDetail?postID=94705
+    NewsHeadLinesModel *model = _model.newsHeadline[0];
+    if ([[UIApplication sharedApplication] openURL:[NSURL URLWithString:model.url]]) {
+        NSLog(@"ok");
+    };
+    
+}
+
+
+- (IBAction)actionOnBtnBottom:(UIButton *)sender {
+    NewsHeadLinesModel *model = _model.newsHeadline[1];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:model.url]];
+}
+
+
 @end

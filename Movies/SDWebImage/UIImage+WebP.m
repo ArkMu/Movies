@@ -8,7 +8,12 @@
 
 #ifdef SD_WEBP
 #import "UIImage+WebP.h"
-#import "WebP/decode.h"
+
+#if !COCOAPODS
+#import "webp/decode.h"
+#else
+#import "libwebp/webp/decode.h"
+#endif
 
 // Callback for CGDataProviderRelease
 static void FreeImageData(void *info, const void *data, size_t size)

@@ -62,9 +62,15 @@
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G8R-iX-f1H">
                         <rect key="frame" x="8" y="158" width="304" height="33"/>
+                        <connections>
+                            <action selector="actionOnBtnBottom:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="J3x-5w-tfP"/>
+                        </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1zn-9K-4ZB">
                         <rect key="frame" x="8" y="116" width="304" height="34"/>
+                        <connections>
+                            <action selector="actionOnBtnTop:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="epo-ES-dfu"/>
+                        </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vTF-l6-Ycf">
                         <rect key="frame" x="83" y="166" width="229" height="16"/>

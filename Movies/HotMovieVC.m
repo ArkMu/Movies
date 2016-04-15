@@ -50,7 +50,7 @@ static NSString *cellIdentifier = @"cell";
     [self loadData];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"search_icon_search@2x"] style:UIBarButtonItemStylePlain target:self action:@selector(actionOnSearch)];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(actionOnSearch)];
+//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(actionOnSearch)];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
 
 }

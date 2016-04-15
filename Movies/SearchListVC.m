@@ -31,8 +31,6 @@
 
 @property (nonatomic, strong) NSMutableArray *searchArr;
 
-//@property (nonatomic, strong) UISearchController *searchControl;
-
 @property (nonatomic, strong) UISearchBar *searchBar;
 
 @property (nonatomic, strong) NSMutableArray *resultArr;
@@ -121,6 +119,12 @@ static NSString *cellIdentifier = @"cell";
     }
     return 30;
 }
+
+//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+//    if (indexPath.section ) {
+//        <#statements#>
+//    }
+//}
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UILabel *label = [[UILabel alloc] initWithFrame:self.view.frame];
@@ -216,17 +220,17 @@ static NSString *cellIdentifier = @"cell";
     }
     detail.title = [sender currentTitle];
     
-    [self.navigationController pushViewController:detail animated:YES];
+    [self.navigationController pushViewController:detail animated:NO];
 }
 
 #pragma mark - UISearchBarDelegate
 
 - (void)actionOnBackBtn {
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:NO];
 }
 
 - (void)actionOnCancelBtnTap {
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:NO];
 }
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
@@ -234,68 +238,5 @@ static NSString *cellIdentifier = @"cell";
     [self.navigationController pushViewController:detail animated:NO];
     return NO;
 }
-
-//- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-//    SearchDetailVC *detail = [self.storyboard instantiateViewControllerWithIdentifier:@"SearchDetailVC"];
-////    detail.searchArr = _resultArr;
-//    
-//    [self.navigationController pushViewController:detail animated:YES];
-//    
-////    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-////    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-////    manager.responseSerializer = [AFJSONResponseSerializer serializer];
-////    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", nil];
-////    
-//////    NSDictionary *parameter = @{//@"Host":@"api.meituan.com",
-//////                                //@"Connection":@"Keep-Alive",
-//////                                //@"Accept-Encoding":@"gzip",
-//////                                @"__skcy":@"iazvqXeSMkphadlRPaDWbDCfN1k=",
-//////                                @"__skua":@"7e01cf8dd30a179800a7a93979b430b2",
-//////                                @"__skno":@"6478cbce-cbdb-4891-ae32-be6e988cd459",
-//////                                @"__skck":@"6a375bce8c66a0dc293860dfa83833ef",
-//////                                @"__skts":@"1460037176796",
-//////                                //@"User-Agent":@"AiMovie /SEMC-4.1.2-LT26ii_1266-9060-1280x720-320-6.6.0-6601-353617055672400-qihu360-dy"
-//////                                };
-////    
-////    NSString *str = [NSString stringWithFormat:@"http://api.meituan.com/mmdb/search/integrated/keyword/list.json?keyword=\%@&stype=-1&refer=1&iscorrected=false&limit=10&offset=0&token=&__vhost=api.maoyan.com&utm_campaign=AmovieBmovieCD-1&movieBundleVersion=6601&utm_source=qihu360-dy&utm_medium=android&utm_term=6.6.0&utm_content=353617055672400&ci=73&net=0&dModel=LT26ii&uuid=587CEF31FE587F2FDEB7EA51D16D4D7C3165B08724FB309D1056B5BED71757FD&lat=34.819328&lng=113.564276",_searchBar.text];
-////    
-////    
-////    NSString *str1 = [str stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-////    
-////    NSString *str2 = [str stringByAppendingString:@"&__skck=6a375bce8c66a0dc293860dfa83833ef&__skts=1460037176796&__skua=7e01cf8dd30a179800a7a93979b430b2&__skno=6478cbce-cbdb-4891-ae32-be6e988cd459&__skcy=iazvqXeSMkphadlRPaDWbDCfN1k%3D"];
-////    
-////    [manager GET:str1 parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-////        NSLog(@"%@", responseObject);
-////        NSDictionary *resultDict = (NSDictionary *)responseObject;
-////        NSArray *arr = resultDict[@"data"];
-////        NSArray *arr1 = arr[0][@"list"];
-////        for (NSDictionary *dict in arr1) {
-////            SearchMovieModel *model = [SearchMovieModel modelWithDictionary:dict];
-////            [_resultArr addObject:model];
-////        }
-////        
-////        SearchDetailVC *detail = [self.storyboard instantiateViewControllerWithIdentifier:@"SearchDetailVC"];
-////        detail.searchArr = _resultArr;
-////        
-////        [self.navigationController pushViewController:detail animated:YES];
-//////        [_tableView reloadData];
-////    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-////        NSLog(@"%@", error);
-////    }];
-//    
-//    
-//    
-////    http://api.meituan.com/mmdb/search/integrated/keyword/list.json?keyword=%E4%B8%9C&stype=-1&refer=1&iscorrected=false&limit=10&offset=0&token=&__vhost=api.maoyan.com&utm_campaign=AmovieBmovieCD-1&movieBundleVersion=6601&utm_source=qihu360-dy&utm_medium=android&utm_term=6.6.0&utm_content=353617055672400&ci=73&net=0&dModel=LT26ii&uuid=587CEF31FE587F2FDEB7EA51D16D4D7C3165B08724FB309D1056B5BED71757FD&lat=34.819328&lng=113.564276&__skck=6a375bce8c66a0dc293860dfa83833ef&__skts=1460037176796&__skua=7e01cf8dd30a179800a7a93979b430b2&__skno=6478cbce-cbdb-4891-ae32-be6e988cd459&__skcy=iazvqXeSMkphadlRPaDWbDCfN1k%3D
-//}
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
