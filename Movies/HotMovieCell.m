@@ -42,14 +42,9 @@
     [_imgView sd_setImageWithURL:[NSURL URLWithString:urlStr] placeholderImage:nil];
     _nmLabel.text = model.nm;
     _scmLabel.text = model.scm;
-    _mkLabel.text = [NSString stringWithFormat:@"%.1f", model.mk];
+    _mkLabel.text = [NSString stringWithFormat:@"%.1f分", model.mk];
     _showInfoLabel.text = model.showInfo;
     
-    
-    FMDBShare *share = [FMDBShare shareDataBase];
-    if (![[share selectFromTableWithId:model.Id] count]) {  // 如果没有找到 则将该model插入到数据库
-       [share insertInfoIntoTable:model];
-    }
 }
 
 - (void)awakeFromNib {

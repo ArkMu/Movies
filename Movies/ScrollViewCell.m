@@ -16,7 +16,7 @@
 
 @interface ScrollViewCell () 
 
-@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+//@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
 @property (weak, nonatomic) IBOutlet UIImageView *leftImgView;
 @property (weak, nonatomic) IBOutlet UIImageView *centerImgView;
@@ -34,6 +34,12 @@
 
 @implementation ScrollViewCell
 
+- (void)updateImage {
+        UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(ScreenW * 2, 0, ScreenW, 0)];
+        [self scrollViewDidEndDecelerating:scrollView];
+
+}
+
 - (void)awakeFromNib {
     _scrollView.delegate = self;
     _scrollView.pagingEnabled = YES;
@@ -44,7 +50,6 @@
     [_centerImgView addGestureRecognizer:tap];
     
     _cotainerView.backgroundColor = [UIColor colorWithWhite:0.5 alpha:0.6];
-    
 }
 
 - (void)actionOnTap {
@@ -77,8 +82,10 @@
     [_pageControl mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.mas_equalTo(_cotainerView);
     }];
+    _updateImageMethod = @selector(updateImageMethod);
     
     [self setImgViewForScrollView];
+    
 }
 
 - (void)setImgViewForScrollView {

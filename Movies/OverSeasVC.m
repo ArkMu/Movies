@@ -46,6 +46,9 @@
 #import "OverSeasVC.h"
 
 #import "AFHTTPSessionManager.h"
+#import "MJRefresh.h"
+#import "SVProgressHUD.h"
+#import "Reachability.h"
 
 #import "HotMovieModel.h"
 #import "HotMovieCell.h"
@@ -63,6 +66,13 @@
 
 @property (nonatomic, strong) NSArray *arr;
 
+@property (nonatomic, assign) NSInteger pagrIndex;
+
+@property (nonatomic, strong) AFHTTPSessionManager *manager;
+
+@property (nonatomic, assign) NSInteger netReached;
+@property (nonatomic, strong) NSTimer *timer;
+
 @end
 
 @implementation OverSeasVC
@@ -73,54 +83,112 @@ static NSString *hotCellIdentifier = @"hot";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    _manager = [AFHTTPSessionManager manager];
+    
     _arr = @[@"NA",@"KR",@"JP"];
-    [self loadData];
-}
+    
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 150) style:UITableViewStylePlain];
+    _tableView.dataSource = self;
+    _tableView.delegate = self;
 
-- (void)loadData {
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [self.view addSubview:_tableView];
     
-    NSDictionary *parameter = @{@"Accept-Charset": @"utf-8",
-                                @"Token": @"",
-                                @"Date": @"Tue, 5 Apr 2016 07:14:22 GMT",
-                                @"Key": @"7773764",
-                                @"Authorization": @"630f151f0fe90355db3608da5bb37491"
-                                };
     
-    [manager GET:@"http://api.maoyan.com/mmdb/movie/oversea/recommend.json?area=JP&token=&utm_campaign=AmovieBmovieCD-1&movieBundleVersion=6601&utm_source=qihu360-dy&utm_medium=android&utm_term=6.6.0&utm_content=353617055672400&ci=73&net=255&dModel=LT26ii&uuid=587CEF31FE587F2FDEB7EA51D16D4D7C3165B08724FB309D1056B5BED71757FD" parameters:parameter progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSLog(@"%@", responseObject);
+    [_tableView registerNib:[UINib nibWithNibName:NSStringFromClass([MovieDetailCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:cellIdentifier];
+    [_tableView registerNib:[UINib nibWithNibName:NSStringFromClass([HotMovieCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:hotCellIdentifier];
+    
+    _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        _pagrIndex = 0;
+        _netReached = 0;
         
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"%@", error);
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [self loadHotData];
+            [self loadComData];
+        });
+        
+//        dispatch_queue_t queue = dispatch_queue_create("lxz", DISPATCH_QUEUE_SERIAL);
+//        dispatch_async(queue, ^{
+//            [self loadHotData];
+//            [self loadComData];
+//            
+//            if ([_tableView.mj_header isRefreshing]) {
+//                [_tableView.mj_header endRefreshing];
+//            }
+//        });
     }];
     
+    
+    [_tableView.mj_header beginRefreshing];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    Reachability *reach = [Reachability reachabilityForInternetConnection];
+    
+    if (![reach currentReachabilityStatus]) {
+        [SVProgressHUD showInfoWithStatus:@"网络状况不佳"];
+        if ([_tableView.mj_header isRefreshing]) {
+            [_tableView.mj_header endRefreshing];
+        }
+    } else {
+        _overSeasComingArr = [NSMutableArray array];
+        _tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+            _pagrIndex++;
+            [self loadComData];
+        }];
+    }
+    
+    _netReached = 0;
+    _timer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(loadTabeViewData) userInfo:nil repeats:YES];
+}
+
+- (void)loadTabeViewData {
+    if (_netReached == 2) {
+        [_tableView reloadData];
+        [_timer invalidate];
+        if ([_tableView.mj_header isRefreshing]) {
+            [_tableView.mj_header endRefreshing];
+        }
+    }
+}
+
+- (void)loadComData {
     // 待映
     NSDictionary *parameter1 = @{@"Accept-Charset": @"utf-8",
-                                @"Token": @"",
-                                @"Date": @"Tue, 5 Apr 2016 07:14:22 GMT",
-                                @"Key": @"95204960",
-                                @"Authorization": @"5b21e39c747f65b26991502c18539d57"
-                                };
+                                 @"Token": @"",
+                                 @"Date": @"Tue, 5 Apr 2016 07:14:22 GMT",
+                                 @"Key": @"95204960",
+                                 @"Authorization": @"5b21e39c747f65b26991502c18539d57",
+                                 @"offset":@(_pagrIndex * 10)
+                                 };
     
-    NSString *urlCom = [NSString stringWithFormat:@"http://api.maoyan.com/mmdb/movie/oversea/coming.json?area=\%@&offset=0&limit=10&token=&utm_campaign=AmovieBmovieCD-1&movieBundleVersion=6601&utm_source=qihu360-dy&utm_medium=android&utm_term=6.6.0&utm_content=353617055672400&ci=73&net=255&dModel=LT26ii&uuid=587CEF31FE587F2FDEB7EA51D16D4D7C3165B08724FB309D1056B5BED71757FD", _arr[_index]];
-    [manager GET:urlCom parameters:parameter1 progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSLog(@"%@", responseObject);
+    NSString *urlCom = [NSString stringWithFormat:@"http://api.maoyan.com/mmdb/movie/oversea/coming.json?area=\%@&limit=10&token=&utm_campaign=AmovieBmovieCD-1&movieBundleVersion=6601&utm_source=qihu360-dy&utm_medium=android&utm_term=6.6.0&utm_content=353617055672400&ci=73&net=255&dModel=LT26ii&uuid=587CEF31FE587F2FDEB7EA51D16D4D7C3165B08724FB309D1056B5BED71757FD", _arr[_index]];
+    [_manager GET:urlCom parameters:parameter1 progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+
         NSDictionary *resultDict = (NSDictionary *)responseObject;
         
         NSArray *arr = resultDict[@"data"][@"coming"];
+        if (!arr.count) {
+            _tableView.mj_footer.state = MJRefreshStateNoMoreData;
+            return;
+        }
         
-        _overSeasComingArr = [NSMutableArray array];
+       
         for (NSDictionary *dict in arr) {
             HotMovieModel *model = [HotMovieModel modelWithDictionary:dict];
             [_overSeasComingArr addObject:model];
         }
         
-        [self loadTableView];
+        _netReached++;
+        [_tableView reloadData];
+        if ([_tableView.mj_footer isRefreshing]) {
+            [_tableView.mj_footer endRefreshing];
+        }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"%@", error);
+
     }];
-    
-    
+}
+
+- (void)loadHotData {
     // 热映
     NSDictionary *parameter2 = @{@"Accept-Charset": @"utf-8",
                                  @"Token": @"",
@@ -130,8 +198,8 @@ static NSString *hotCellIdentifier = @"hot";
                                  };
     
     NSString *urlHot = [NSString stringWithFormat:@"http://api.maoyan.com/mmdb/movie/oversea/hot.json?area=\%@&offset=0&limit=10&token=&utm_campaign=AmovieBmovieCD-1&movieBundleVersion=6601&utm_source=qihu360-dy&utm_medium=android&utm_term=6.6.0&utm_content=353617055672400&ci=73&net=255&dModel=LT26ii&uuid=587CEF31FE587F2FDEB7EA51D16D4D7C3165B08724FB309D1056B5BED71757FD", _arr[_index]];
-    [manager GET:urlHot parameters:parameter2 progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSLog(@"%@", responseObject);
+    [_manager GET:urlHot parameters:parameter2 progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
         NSDictionary *resultDict = (NSDictionary *)responseObject;
         
         NSArray *arr = resultDict[@"data"][@"hot"];
@@ -142,30 +210,12 @@ static NSString *hotCellIdentifier = @"hot";
             [_overSeasHotArr addObject:model];
         }
         
-        [self loadTableView];
+        _netReached++;
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"%@", error);
+
     }];
-    
 }
 
-
-- (void)loadTableView {
-    if (_tableView) {
-        [_tableView reloadData];
-        return;
-    }
-    
-    _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-    _tableView.dataSource = self;
-    _tableView.delegate = self;
-//    _tableView.estimatedRowHeight = 100;
-    [self.view addSubview:_tableView];
-    
-    
-    [_tableView registerNib:[UINib nibWithNibName:NSStringFromClass([MovieDetailCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:cellIdentifier];
-    [_tableView registerNib:[UINib nibWithNibName:NSStringFromClass([HotMovieCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:hotCellIdentifier];
-}
 
 #pragma mark - UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -236,17 +286,7 @@ static NSString *hotCellIdentifier = @"hot";
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
 }
-*/
 
 @end

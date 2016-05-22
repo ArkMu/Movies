@@ -64,7 +64,7 @@ static NSString *cellIdentifier = @"cell";
 
         [self loadTableView];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"%@", error);
+
     }];
     
     _searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width - 50, 44)];
@@ -119,13 +119,6 @@ static NSString *cellIdentifier = @"cell";
     }
     return 30;
 }
-
-//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    if (indexPath.section ) {
-//        <#statements#>
-//    }
-//}
-
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UILabel *label = [[UILabel alloc] initWithFrame:self.view.frame];
     label.font = [UIFont systemFontOfSize:13.0];

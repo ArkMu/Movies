@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "744A1E57FF5D008148CF22A96D175C683BC2B14C",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "744A1E57FF5D008148CF22A96D175C683BC2B14C" : 0,
+    "833D73898C520B69321DB31618DF844F3893968D" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "0A353147-72A2-4BD1-B24B-CEDEED0129C6",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "744A1E57FF5D008148CF22A96D175C683BC2B14C" : "Movies\/",
+    "833D73898C520B69321DB31618DF844F3893968D" : ""
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "Movies",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Movies.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/lxzopen\/movies.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "744A1E57FF5D008148CF22A96D175C683BC2B14C"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/lxzopen\/StudyDemo.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "833D73898C520B69321DB31618DF844F3893968D"
+    }
+  ]
+}

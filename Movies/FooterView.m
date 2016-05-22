@@ -43,10 +43,9 @@
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:ImodelL.url]];
     UIImage *image = [UIImage imageWithData:data];
     [_btnL setImage:image forState:UIControlStateNormal];
-//    [_btnL setImage:[UIImage imageWithData:data] forState:UIControlStateNormal];
-    _btnL.imageView.contentMode = UIViewContentModeScaleToFill;
-//    [_btnL sd_setImageWithURL:[NSURL URLWithString:ImodelL.url] forState:UIControlStateNormal];
+    _btnL.imageView.contentMode = UIViewContentModeScaleAspectFit;
     
+
     _btnL.imageEdgeInsets = UIEdgeInsetsMake(0, 15, 30, 15);
     _btnL.titleEdgeInsets = UIEdgeInsetsMake(0, -130, -50, -50);
     
@@ -58,6 +57,7 @@
     
     ImageModel *ImodelCL = modelCL.image;
     [_btnCL sd_setImageWithURL:[NSURL URLWithString:ImodelCL.url] forState:UIControlStateNormal];
+    _btnCL.imageView.contentMode = UIViewContentModeScaleAspectFill;
     
     _btnCL.imageEdgeInsets = UIEdgeInsetsMake(0, 15, 30, 15);
     _btnCL.titleEdgeInsets = UIEdgeInsetsMake(0, -130, -50, -50);

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -12,7 +13,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="112"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="111"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="111.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v75-Le-fz0">
@@ -22,13 +23,13 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SMK-hJ-icB">
-                        <rect key="frame" x="57" y="16" width="36" height="17"/>
+                        <rect key="frame" x="57" y="16" width="35.5" height="17"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dPR-TM-mzR">
-                        <rect key="frame" x="16" y="40" width="288" height="18"/>
+                        <rect key="frame" x="16" y="40" width="274.5" height="18"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -41,7 +42,7 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v8b-qj-SXm">
-                        <rect key="frame" x="56" y="74" width="36" height="17"/>
+                        <rect key="frame" x="56" y="74" width="35.5" height="17"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -67,6 +68,7 @@
                     <constraint firstItem="dPR-TM-mzR" firstAttribute="leading" secondItem="v75-Le-fz0" secondAttribute="leading" id="74n-kF-gSW"/>
                     <constraint firstItem="TxF-oF-RMs" firstAttribute="top" relation="greaterThanOrEqual" secondItem="dPR-TM-mzR" secondAttribute="bottom" constant="5" id="DRC-jE-tt9"/>
                     <constraint firstItem="paX-Xt-Oej" firstAttribute="centerY" secondItem="l5j-xG-4oB" secondAttribute="centerY" id="K7C-5N-osf"/>
+                    <constraint firstItem="dPR-TM-mzR" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="6:7" id="Pkz-y4-cWg"/>
                     <constraint firstItem="dPR-TM-mzR" firstAttribute="top" secondItem="v75-Le-fz0" secondAttribute="bottom" constant="8" id="RFj-oz-Y3r"/>
                     <constraint firstAttribute="trailing" secondItem="l5j-xG-4oB" secondAttribute="trailing" constant="8" id="WQx-04-9xe"/>
                     <constraint firstItem="l5j-xG-4oB" firstAttribute="leading" secondItem="paX-Xt-Oej" secondAttribute="trailing" constant="8" id="aIh-V5-X4h"/>
@@ -83,6 +85,7 @@
                 <variation key="default">
                     <mask key="constraints">
                         <exclude reference="cVa-xB-Ya4"/>
+                        <exclude reference="noJ-uM-rQ4"/>
                     </mask>
                 </variation>
             </tableViewCellContentView>

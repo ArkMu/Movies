@@ -12,8 +12,14 @@
 
 @interface ScrollViewCell : UITableViewCell <UIScrollViewDelegate>
 
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+
 @property (nonatomic, strong) NSArray<ScrollViewModel *> *modelArr;
 
 @property (nonatomic, strong) void (^gotoWebView)(NSString *webUrl);
+
+- (void)updateImage;
+
+@property (nonatomic, assign) SEL updateImageMethod;
 
 @end

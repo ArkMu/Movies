@@ -12,6 +12,11 @@
 
 @property (strong, nonatomic) UIWindow *window;
 
+- (void)changeRootView ;
+
+@property (nonatomic, strong) NSMutableArray *collectArr;
+
+- (NSString *)createCollectPlist;
 
 @end
 

@@ -9,6 +9,11 @@
 #import "DiscoverVC.h"
 
 #import "AFHTTPSessionManager.h"
+#import "MJRefresh.h"
+#import "SVProgressHUD.h"
+#import "Reachability.h"
+
+#import "Common.h"
 
 #import "ScrollViewModel.h"
 #import "ScrollViewCell.h"
@@ -33,6 +38,12 @@
 
 @property (nonatomic, strong) NSMutableArray *feedCellArr;
 
+@property (nonatomic, strong) AFHTTPSessionManager *manager;
+
+@property (nonatomic, assign) NSInteger pagrIndex;
+
+@property (nonatomic, assign) NSInteger netReached;
+@property (nonatomic, strong) NSTimer *timer;
 @end
 
 @implementation DiscoverVC
@@ -45,9 +56,82 @@ static NSString *oneImgIdentifier = @"one";
 - (void)viewDidLoad {
     [super viewDidLoad];
    
-    self.navigationController.navigationBar.translucent = NO;
+    _manager = [AFHTTPSessionManager manager];
     
-    [self loadData];
+    self.navigationItem.title = @"发现";
+    self.navigationController.navigationBar.translucent = NO;
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 104) style:UITableViewStylePlain];
+    _tableView.dataSource = self;
+    _tableView.delegate =  self;
+    _tableView.estimatedRowHeight = 100;
+    
+    [self.view addSubview:_tableView];
+    
+    [_tableView registerNib:[UINib nibWithNibName:NSStringFromClass([ScrollViewCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:scrollViewIdentifier];
+    [_tableView registerNib:[UINib nibWithNibName:NSStringFromClass([FooterView class]) bundle:[NSBundle mainBundle]] forHeaderFooterViewReuseIdentifier:footViewIdentifier];
+    [_tableView registerNib:[UINib nibWithNibName:NSStringFromClass([FeedsCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:cellIdentifier];
+    [_tableView registerNib:[UINib nibWithNibName:NSStringFromClass([FeedsOneCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:oneImgIdentifier];
+    
+    _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        _pagrIndex = 0;
+        _netReached = 0;
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [self loadScollViewData];
+            _feedCellArr = [NSMutableArray array];
+            [self loadDetailData];
+        });
+        
+        
+        
+//        dispatch_queue_t queue = dispatch_queue_create("lxz", DISPATCH_QUEUE_SERIAL);
+//        
+//        dispatch_sync(queue, ^{
+//            [self loadScollViewData];
+//            _feedCellArr = [NSMutableArray array];
+//            [self loadDetailData];
+//            if ([_tableView.mj_header isRefreshing]) {
+//                [_tableView.mj_header endRefreshing];
+//            }
+//        });
+        
+    }];
+    
+    [_tableView.mj_header beginRefreshing];
+    
+    _timer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(reloadTableView) userInfo:nil repeats:YES];
+}
+
+- (void)reloadTableView {
+    if (_netReached == 2) {
+        [_tableView reloadData];
+        [_timer invalidate];
+        if ([_tableView.mj_header isRefreshing]) {
+            [_tableView.mj_header endRefreshing];
+        }
+    }
+    
+}
+
+
+
+-(void)viewWillAppear:(BOOL)animated {
+    _netReached = 0;
+    Reachability *reach = [Reachability reachabilityForInternetConnection];
+
+    if (![reach currentReachabilityStatus]) {
+        [SVProgressHUD showInfoWithStatus:@"网络状况不佳"];
+        if ([_tableView.mj_header isRefreshing]) {
+            [_tableView.mj_header endRefreshing];
+        }
+    } else {
+        _tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+            _pagrIndex++;
+            [self loadDetailData];
+        }];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -56,8 +140,8 @@ static NSString *oneImgIdentifier = @"one";
     
 }
 
-- (void)loadData {
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+- (void)loadScollViewData {
+    
     
     //获取顶部scrollview
     NSDictionary *parameter = @{@"Host":@"api.meituan.com",
@@ -70,8 +154,8 @@ static NSString *oneImgIdentifier = @"one";
                                 @"__skts":@"1459648947046",
                                 @"User_Agent":@"AiMovie /SEMC-4.1.2-LT26ii_1266-9060-1280x720-320-6.6.0-6601-353617055672400-qihu360-dy"};
     
-    [manager GET:@"http://advert.mobile.meituan.com/api/v3/adverts?cityid=73&category=14&version=6.6.0&new=0&app=movie&clienttp=android&uuid=587CEF31FE587F2FDEB7EA51D16D4D7C3165B08724FB309D1056B5BED71757FD&devid=353617055672400&uid=&movieid=&partner=1&apptype=1&smId=&utm_campaign=AmovieBmovieCD-1&movieBundleVersion=6601&utm_source=qihu360-dy&utm_medium=android&utm_term=6.6.0&utm_content=353617055672400&ci=73&net=255&dModel=LT26ii&lat=34.819319&lng=113.564281" parameters:parameter progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSLog(@"%@", responseObject);
+    [_manager GET:@"http://advert.mobile.meituan.com/api/v3/adverts?cityid=73&category=14&version=6.6.0&new=0&app=movie&clienttp=android&uuid=587CEF31FE587F2FDEB7EA51D16D4D7C3165B08724FB309D1056B5BED71757FD&devid=353617055672400&uid=&movieid=&partner=1&apptype=1&smId=&utm_campaign=AmovieBmovieCD-1&movieBundleVersion=6601&utm_source=qihu360-dy&utm_medium=android&utm_term=6.6.0&utm_content=353617055672400&ci=73&net=255&dModel=LT26ii&lat=34.819319&lng=113.564281" parameters:parameter progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+
         NSDictionary *resultDict = (NSDictionary *)responseObject;
         NSArray *arr = resultDict[@"data"];
         
@@ -81,15 +165,18 @@ static NSString *oneImgIdentifier = @"one";
             [_scrollViewArr addObject:model];
         }
         
-
+        _netReached++;
+        
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"%@", error);
+        if ([_tableView.mj_header isRefreshing]) {
+            [_tableView.mj_header endRefreshing];
+        }
     }];
     
     // 获取4个btn
     
-    [manager GET:@"http://api.meituan.com/sns/v2/buttons.json?__vhost=api.maoyan.com&utm_campaign=AmovieBmovieCD-1&movieBundleVersion=6601&utm_source=qihu360-dy&utm_medium=android&utm_term=6.6.0&utm_content=353617055672400&ci=73&net=255&dModel=LT26ii&uuid=587CEF31FE587F2FDEB7EA51D16D4D7C3165B08724FB309D1056B5BED71757FD&lat=34.819315&lng=113.564332" parameters:parameter progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSLog(@"%@", responseObject);
+    [_manager GET:@"http://api.meituan.com/sns/v2/buttons.json?__vhost=api.maoyan.com&utm_campaign=AmovieBmovieCD-1&movieBundleVersion=6601&utm_source=qihu360-dy&utm_medium=android&utm_term=6.6.0&utm_content=353617055672400&ci=73&net=255&dModel=LT26ii&uuid=587CEF31FE587F2FDEB7EA51D16D4D7C3165B08724FB309D1056B5BED71757FD&lat=34.819315&lng=113.564332" parameters:parameter progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+
         NSDictionary *resultDict = (NSDictionary *)responseObject;
         NSArray *arr = resultDict[@"data"];
         
@@ -100,43 +187,41 @@ static NSString *oneImgIdentifier = @"one";
         }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"%@", error);
+
     }];
     
     
+    
+}
+
+- (void)loadDetailData {
     // 获取details
     
-    [manager GET:@"http://api.meituan.com/sns/v1/feed.json?offset=0&limit=10&timestamp=0&__vhost=api.maoyan.com&utm_campaign=AmovieBmovieCD-1&movieBundleVersion=6601&utm_source=qihu360-dy&utm_medium=android&utm_term=6.6.0&utm_content=353617055672400&ci=73&net=255&dModel=LT26ii&uuid=587CEF31FE587F2FDEB7EA51D16D4D7C3165B08724FB309D1056B5BED71757FD&lat=34.819208&lng=113.564376" parameters:parameter progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSLog(@"%@", responseObject);
+    NSDictionary *parameter = @{@"offset":@(_pagrIndex * 10)};
+    
+    [_manager GET:@"http://api.meituan.com/sns/v1/feed.json?limit=10&timestamp=0&__vhost=api.maoyan.com&utm_campaign=AmovieBmovieCD-1&movieBundleVersion=6601&utm_source=qihu360-dy&utm_medium=android&utm_term=6.6.0&utm_content=353617055672400&ci=73&net=255&dModel=LT26ii&uuid=587CEF31FE587F2FDEB7EA51D16D4D7C3165B08724FB309D1056B5BED71757FD&lat=34.819208&lng=113.564376" parameters:parameter
+         progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSDictionary *resultDict = (NSDictionary *)responseObject;
         
         NSArray *arr = resultDict[@"data"][@"feeds"];
-        _feedCellArr = [NSMutableArray array];
+        
         
         for (NSDictionary *dict in arr) {
             FeedsModel *model = [FeedsModel modelWithDictionary: dict];
             [_feedCellArr addObject:model];
         }
-        
-        [self loadTableView];
+             _netReached++;
+             [_tableView reloadData];
+             if ([_tableView.mj_footer isRefreshing]) {
+                 [_tableView.mj_footer endRefreshing];
+             }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"%@", error);
+        if ([_tableView.mj_footer isRefreshing]) {
+            [_tableView.mj_footer endRefreshing];
+        }
     }];
 }
 
-- (void)loadTableView {
-    _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-    _tableView.dataSource = self;
-    _tableView.delegate =  self;
-    _tableView.estimatedRowHeight = 100;
-    
-    [self.view addSubview:_tableView];
-    
-    [_tableView registerNib:[UINib nibWithNibName:NSStringFromClass([ScrollViewCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:scrollViewIdentifier];
-    [_tableView registerNib:[UINib nibWithNibName:NSStringFromClass([FooterView class]) bundle:[NSBundle mainBundle]] forHeaderFooterViewReuseIdentifier:footViewIdentifier];
-    [_tableView registerNib:[UINib nibWithNibName:NSStringFromClass([FeedsCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:cellIdentifier];
-    [_tableView registerNib:[UINib nibWithNibName:NSStringFromClass([FeedsOneCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:oneImgIdentifier];
-}
 
 #pragma mark - UITableViewDataSource
 
@@ -195,6 +280,9 @@ static NSString *oneImgIdentifier = @"one";
             [self.navigationController pushViewController:web animated:YES];
         };
         cell.modelArr = _scrollViewArr;
+        
+        [NSTimer scheduledTimerWithTimeInterval:1.f target:cell selector:cell.updateImageMethod userInfo:nil repeats:YES];
+        
         return cell;
     }
     
@@ -244,15 +332,5 @@ static NSString *oneImgIdentifier = @"one";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

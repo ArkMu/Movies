@@ -20,6 +20,9 @@
 #import "AFHTTPSessionManager.h"
 #import "UIImageView+WebCache.h"
 #import "Masonry.h"
+#import "MJRefresh.h"
+#import "SVProgressHUD.h"
+#import "Reachability.h"
 
 #import "DetailVC.h"
 
@@ -35,6 +38,13 @@
 
 @property (nonatomic, strong) NSMutableArray *movieArr;
 
+@property (nonatomic, strong) AFHTTPSessionManager *manager;
+
+@property (nonatomic, assign) NSInteger pageIndex;
+
+@property (nonatomic, assign) NSInteger netReached;
+@property (nonatomic, strong) NSTimer *timer;
+
 @end
 
 @implementation ComboVC
@@ -44,25 +54,79 @@ static NSString *movieIdentidier = @"movie";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-       
-    [self loadData];
+    
+    self.navigationItem.title = @"待映";
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 44) style:UITableViewStylePlain];
+    _tableView.dataSource = self;
+    _tableView.delegate = self;
+    [self.view addSubview:_tableView];
+    
+    [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:cellIdentifier];
+    [_tableView registerNib:[UINib nibWithNibName:NSStringFromClass([MovieDetailCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:movieIdentidier];
+    
+    _manager = [AFHTTPSessionManager manager];
+    
+    
+    _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        _pageIndex = 0;
+        _netReached = 0;
+        _movieArr = [NSMutableArray array];
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [self loadComingData];
+            [self loadListData];
+            [self loadMoreData];
+        });
+        
+    }];
+    
+    
+    [_tableView.mj_header beginRefreshing];
+    
+    
     
     self.navigationController.navigationBar.translucent = NO;
+}
 
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"search_icon_search@3x"] style:UIBarButtonItemStylePlain target:self action:@selector(actionOnBackBarBtnTaped)];
+- (void)viewWillAppear:(BOOL)animated {
+    Reachability *reach = [Reachability reachabilityForInternetConnection];
+    
+    if (![reach currentReachabilityStatus]) {
+        [SVProgressHUD showInfoWithStatus:@"网络状况不佳"];
+        if ([_tableView.mj_header isRefreshing]) {
+            [_tableView.mj_header endRefreshing];
+        }
+    } else {
+        _tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+            _pageIndex++;
+            _movieArr = [NSMutableArray array];
+            [self loadMoreData];
+        }];
+    }
+    
+    _netReached = 0;
+    _timer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(reloadTableView) userInfo:nil repeats:YES];
+}
+
+- (void)reloadTableView {
+    if (_netReached == 3) {
+        [_tableView reloadData];
+        [_timer invalidate];
+        if ([_tableView.mj_header isRefreshing]) {
+            [_tableView.mj_header endRefreshing];
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-   
     
 }
 
-- (void)loadData {
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    
-    [manager GET:@"http://api.maoyan.com/mmdb/movie/lp/list.json?utm_campaign=AmovieBmovieCD-1&movieBundleVersion=6601&utm_source=qihu360-dy&utm_medium=android&utm_term=6.6.0&utm_content=353617055672400&ci=73&net=255&dModel=LT26ii&uuid=587CEF31FE587F2FDEB7EA51D16D4D7C3165B08724FB309D1056B5BED71757FD" parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSLog(@"%@", responseObject);
+- (void)loadListData {
+    [_manager GET:@"http://api.maoyan.com/mmdb/movie/lp/list.json?utm_campaign=AmovieBmovieCD-1&movieBundleVersion=6601&utm_source=qihu360-dy&utm_medium=android&utm_term=6.6.0&utm_content=353617055672400&ci=73&net=255&dModel=LT26ii&uuid=587CEF31FE587F2FDEB7EA51D16D4D7C3165B08724FB309D1056B5BED71757FD" parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         NSDictionary *resultDict = (NSDictionary *)responseObject;
         
@@ -74,14 +138,16 @@ static NSString *movieIdentidier = @"movie";
             [_listArr addObject:model];
         }
         
-        [self loadTableView];
-        
+        _netReached++;
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"%@", error);
+
     }];
     
-    [manager GET:@"http://api.maoyan.com/mmdb/movie/v1/list/wish/order/coming.json?offset=0&limit=50&utm_campaign=AmovieBmovieCD-1&movieBundleVersion=6601&utm_source=qihu360-dy&utm_medium=android&utm_term=6.6.0&utm_content=353617055672400&ci=73&net=255&dModel=LT26ii&uuid=587CEF31FE587F2FDEB7EA51D16D4D7C3165B08724FB309D1056B5BED71757FD" parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSLog(@"%@", responseObject);
+}
+
+
+- (void)loadComingData {
+    [_manager GET:@"http://api.maoyan.com/mmdb/movie/v1/list/wish/order/coming.json?offset=0&limit=50&utm_campaign=AmovieBmovieCD-1&movieBundleVersion=6601&utm_source=qihu360-dy&utm_medium=android&utm_term=6.6.0&utm_content=353617055672400&ci=73&net=255&dModel=LT26ii&uuid=587CEF31FE587F2FDEB7EA51D16D4D7C3165B08724FB309D1056B5BED71757FD" parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         NSDictionary *result = (NSDictionary *)responseObject;
         
@@ -93,65 +159,36 @@ static NSString *movieIdentidier = @"movie";
             [_commingMovieArr addObject:model];
         }
         
-        [self loadTableView];
+        _netReached++;
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"%@", error);
+
     }];
+}
+
+- (void)loadMoreData {
     
-    NSDictionary *parameter = @{@"Host":@"api.meituan.com",
-                                @"Connection":@"Keep-Alive",
-                                @"Accept-Encoding":@"gzip",
-                                @"__skcy":@"aUQRNUJ1iVKeLSF4a0UR9fl1IEk=",
-                                @"__skua":@"7e01cf8dd30a179800a7a93979b430b2",
-                                @"__skno":@"eccb655f-e29e-4396-a520-9997ffd053a1",
-                                @"_skck":@"6a375bce8c66a0dc293860dfa83833ef",
-                                @"__skts":@"1459648947046",
-                                @"User_Agent":@"AiMovie /SEMC-4.1.2-LT26ii_1266-9060-1280x720-320-6.6.0-6601-353617055672400-qihu360-dy"};
+    NSDictionary *parameter = @{@"offset":@(_pageIndex * 12)};
     
-//    NSDictionary *parameter = @{@"Host":@"api.meituan.com",
-//                                @"Connection":@"Keep-Alive",
-//                                @"Accept-Encoding":@"gzip",
-//                                @"__skcy":@"eU+3ycPPOaBLhzTTVOGEJv3LCbc=",
-//                                @"__skua":@"7e01cf8dd30a179800a7a93979b430b2",
-//                                @"__skno":@"5c88d754-b1b0-4e5d-bc79-f172499a7e0f",
-//                                @"__skck":@"6a375bce8c66a0dc293860dfa83833ef",
-//                                @"__skts":@"1459768174655",
-//                                @"User-Agent":@"AiMovie /SEMC-4.1.2-LT26ii_1266-9060-1280x720-320-6.6.0-6601-353617055672400-qihu360-dy"
-//                                };
-    
-    [manager GET:@"http://api.meituan.com/mmdb/movie/v1/list/rt/order/coming.json?ct=%E9%83%91%E5%B7%9E&offset=0&limit=12&__vhost=api.maoyan.com&utm_campaign=AmovieBmovieCD-1&movieBundleVersion=6601&utm_source=qihu360-dy&utm_medium=android&utm_term=6.6.0&utm_content=353617055672400&ci=73&net=255&dModel=LT26ii&uuid=587CEF31FE587F2FDEB7EA51D16D4D7C3165B08724FB309D1056B5BED71757FD&lat=34.819287&lng=113.564373" parameters:parameter progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSLog(@"%@", responseObject);
+    [_manager GET:@"http://api.meituan.com/mmdb/movie/v1/list/rt/order/coming.json?ct=%E9%83%91%E5%B7%9E&limit=12&__vhost=api.maoyan.com&utm_campaign=AmovieBmovieCD-1&movieBundleVersion=6601&utm_source=qihu360-dy&utm_medium=android&utm_term=6.6.0&utm_content=353617055672400&ci=73&net=255&dModel=LT26ii&uuid=587CEF31FE587F2FDEB7EA51D16D4D7C3165B08724FB309D1056B5BED71757FD&lat=34.819287&lng=113.564373" parameters:parameter progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         NSDictionary *result = (NSDictionary *)responseObject;
         
         NSArray *data = result[@"data"][@"coming"];
         
-        _movieArr = [NSMutableArray array];
         for (NSDictionary *dict in data) {
             HotMovieModel *model = [HotMovieModel modelWithDictionary:dict];
             [_movieArr addObject:model];
         }
         
-        [self loadTableView];
+        _netReached++;
+        
+        if ([_tableView.mj_footer isRefreshing]) {
+            [_tableView.mj_footer endRefreshing];
+        }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"%@", error);
+
     }];
 }
-
-- (void)loadTableView {
-    if (_tableView) {
-        [_tableView reloadData];
-        return;
-    }
-    _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-    _tableView.dataSource = self;
-    _tableView.delegate = self;
-    [self.view addSubview:_tableView];
-    
-    [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:cellIdentifier];
-    [_tableView registerNib:[UINib nibWithNibName:NSStringFromClass([MovieDetailCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:movieIdentidier];
-}
-
 
 #pragma mark -UITableViewDataSource
 
@@ -169,11 +206,13 @@ static NSString *movieIdentidier = @"movie";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        return 100;
-    } else if (indexPath.section == 1) {
-        return 150;
+        return 100.f;
     }
-    return 200;
+    return 150.f;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 10.f;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -192,6 +231,7 @@ static NSString *movieIdentidier = @"movie";
         NSInteger count = _listArr.count;
         
         scrollView.contentSize = CGSizeMake(165 * count + 15, 100);
+        scrollView.showsHorizontalScrollIndicator = NO;
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 165 * count + 15, 100)];
         [scrollView addSubview:view];
         scrollView.delegate = self;
@@ -259,6 +299,7 @@ static NSString *movieIdentidier = @"movie";
         NSInteger count = _commingMovieArr.count;
         // 85 * 150  15
         scrollView.contentSize = CGSizeMake(100 * count + 15 , 150);
+        scrollView.showsHorizontalScrollIndicator = NO;
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100 * count + 15, 150)];
         [scrollView addSubview:view];
         scrollView.delegate = self;
@@ -307,6 +348,8 @@ static NSString *movieIdentidier = @"movie";
     
     ListModel *model = _listArr[inter];
     player.videoUrl = model.url;
+    player.movieId = model.movieId;
+    player.movieName = model.movieName;
     
     [self.navigationController pushViewController:player animated:YES];
 }
@@ -332,9 +375,6 @@ static NSString *movieIdentidier = @"movie";
     [self.navigationController pushViewController:detail animated:YES];
 }
 
-- (void)actionOnBackBarBtnTaped {
-    [self.navigationController popViewControllerAnimated:YES];
-}
 
 /*
 #pragma mark - Navigation

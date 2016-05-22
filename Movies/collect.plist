@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<integer>246188</integer>
+	<dict>
+		<key>img</key>
+		<string>http://p0.meituan.net/w.h/movie/88cfbf5b940cd16bba6b88ca355281f3314901.jpg</string>
+		<key>mk</key>
+		<real>6.0999999046325684</real>
+		<key>nm</key>
+		<string>夜孔雀</string>
+		<key>scm</key>
+		<string>两国三段情，夜孔雀开屏</string>
+		<key>showInfo</key>
+		<string>戴思杰</string>
+	</dict>
+	<dict>
+		<key>img</key>
+		<string>http://p1.meituan.net/w.h/movie/73f8a5ba9c96f136454d737530cac56b448798.jpg</string>
+		<key>mk</key>
+		<real>8.8999996185302734</real>
+		<key>nm</key>
+		<string>美国队长3</string>
+		<key>scm</key>
+		<string>铁人打美队，群雄来站队</string>
+		<key>showInfo</key>
+		<string>动作,科幻,冒险</string>
+	</dict>
+	<dict>
+		<key>img</key>
+		<string>http://p0.meituan.net/w.h/movie/88cfbf5b940cd16bba6b88ca355281f3314901.jpg</string>
+		<key>mk</key>
+		<real>6.0999999046325684</real>
+		<key>nm</key>
+		<string>夜孔雀</string>
+		<key>scm</key>
+		<string>两国三段情，夜孔雀开屏</string>
+		<key>showInfo</key>
+		<string>剧情,爱情</string>
+	</dict>
+	<dict>
+		<key>img</key>
+		<string>http://p1.meituan.net/w.h/movie/73f8a5ba9c96f136454d737530cac56b448798.jpg</string>
+		<key>mk</key>
+		<real>8.8999996185302734</real>
+		<key>nm</key>
+		<string>美国队长3</string>
+		<key>scm</key>
+		<string>铁人打美队，群雄来站队</string>
+		<key>showInfo</key>
+		<string>动作,科幻,冒险</string>
+	</dict>
+</array>
+</plist>

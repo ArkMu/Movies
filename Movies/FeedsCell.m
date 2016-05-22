@@ -41,7 +41,13 @@
     ImageModel *rightImgModel = model.imageArr[2];
     [_rightImgView sd_setImageWithURL:[NSURL URLWithString:rightImgModel.url] placeholderImage:nil];
 
-    _timeLabel.text = [NSString stringWithFormat:@"%ld", model.time];
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:model.time / 1000];
+
+    _timeLabel.text = [NSDateFormatter localizedStringFromDate:date dateStyle:NSDateFormatterNoStyle timeStyle:NSDateFormatterShortStyle];
+    
+    
+//    _timeLabel.text = [NSString stringWithFormat:@"%@",date];
+//    _timeLabel.text = [NSString stringWithFormat:@"%ld", model.time];
     
     [_upCountBtn setTitle:[NSString stringWithFormat:@"%ld", model.upCount] forState:UIControlStateNormal];
     [_commentBtn setTitle:[NSString stringWithFormat:@"%ld", model.commentCount] forState:UIControlStateNormal];

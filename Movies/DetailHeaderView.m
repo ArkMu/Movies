@@ -7,10 +7,17 @@
 //
 
 #import "DetailHeaderView.h"
+#import "AppDelegate.h"
 
 #import "MovieModel.h"
 
 #import "UIImageView+WebCache.h"
+
+#import "Account.h"
+#import <AVOSCloud/AVOSCloud.h>
+#import "SVProgressHUD.h"
+
+#define kCollectFile @"collect.plist"
 
 //#import "FMDatabase.h"
 
@@ -25,6 +32,12 @@
 @property (weak, nonatomic) IBOutlet UILabel *srcAndDurLabel;
 @property (weak, nonatomic) IBOutlet UILabel *pubDescLabel;
 @property (weak, nonatomic) IBOutlet UILabel *draLabel;
+
+@property (weak, nonatomic) IBOutlet UIButton *likeBtn;
+
+@property (nonatomic, strong) AppDelegate *app;
+
+@property (nonatomic, assign) BOOL isLike;
 
 @end
 
@@ -50,9 +63,56 @@
     _pubDescLabel.text = model.pubDesc;
     _draLabel.text = model.dra;
     
+    _app = [UIApplication sharedApplication].delegate;
+    
+    
+    NSLog(@"%lu", (unsigned long)_app.collectArr.count);
+    [_app.collectArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([[obj valueForKey:@"Id"] integerValue] == _model.Id) {
+            *stop = YES;
+            _isLike = YES;
+        }
+    }];
+    if (_isLike) {
+        [_likeBtn setTitle:@"取消收藏" forState:UIControlStateNormal];
+    } else {
+        [_likeBtn setTitle:@"收藏" forState:UIControlStateNormal];
+    }
     
 }
 
+- (IBAction)likeAction:(UIButton *)sender {
+    if (![[Account shareAccount] isLogin]) {
+        [SVProgressHUD showErrorWithStatus:@"没有登录"];
+    } else {
+        if (_isLike) {
+            [_app.collectArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                if ([[obj valueForKey:@"Id"] integerValue] == _model.Id) {
+                    [_app.collectArr removeObject:obj];
+                    *stop = YES;
+                }
+            }];
+            
+            [_app.collectArr writeToFile:[_app createCollectPlist] atomically:YES];
+            [_likeBtn setTitle:@"收藏" forState:UIControlStateNormal];
+        } else {
+            
+            NSDictionary *dict = @{@"img":_model.img,
+                                   @"Id":@(_model.Id),
+                                   @"nm":_model.nm,
+                                   @"scm":_model.scm,
+                                   @"mk":@(_model.sc),
+                                   @"showInfo":_model.cat};
+            
+            [_app.collectArr addObject:dict];
+            
+            [_app.collectArr writeToFile:[_app createCollectPlist] atomically:YES];
+            
+            [_likeBtn setTitle:@"取消收藏" forState:UIControlStateNormal];
+        }
+    }
+    
+}
 
 //- (BOOL)insertIntoTable
 

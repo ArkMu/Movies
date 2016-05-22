@@ -12,4 +12,8 @@
 
 @property (nonatomic, strong) NSString *videoUrl;
 
+@property (nonatomic, assign) NSInteger movieId;
+
+@property (nonatomic, strong) NSString *movieName;
+
 @end

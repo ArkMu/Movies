@@ -21,13 +21,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *descLabel;
 @property (weak, nonatomic) IBOutlet UILabel *frtLabel;
 
-@property (weak, nonatomic) IBOutlet UILabel *titleULabel;
-@property (weak, nonatomic) IBOutlet UILabel *titleBLabel;
-
-@property (weak, nonatomic) IBOutlet UILabel *typeULabel;
-@property (weak, nonatomic) IBOutlet UILabel *typeBLabel;
 
 @property (weak, nonatomic) IBOutlet UIButton *wishBtn;
+
+@property (weak, nonatomic) IBOutlet UIButton *topBtn;
+@property (weak, nonatomic) IBOutlet UIButton *bottomBtn;
 
 @end
 
@@ -54,24 +52,24 @@
         _frtLabel.text = [NSString stringWithFormat:@"%@%@上映", model.frt, model.fra];
     }
     
-    
-    if (model.newsHeadline.count == 0) {
+    if (!model.newsHeadline.count) {
         return;
     }
+    
     if (model.newsHeadline.count == 1) {
-        NewsHeadLinesModel *headLine = model.newsHeadline[0];
-        _titleULabel.text = headLine.title;
-        _typeULabel.text = headLine.type;
+        NewsHeadLinesModel *modelT = model.newsHeadline[0];
+        [_topBtn setTitle:[NSString stringWithFormat:@"%@ %@", modelT.type, modelT.title] forState:UIControlStateNormal];
+        _topBtn.titleLabel.font = [UIFont systemFontOfSize:13.0];
         return;
     }
-    NewsHeadLinesModel *headLine = model.newsHeadline[0];
-    _titleULabel.text = headLine.title;
-    _typeULabel.text = headLine.type;
     
-    
-    NewsHeadLinesModel *headLin = model.newsHeadline[1];
-    _titleBLabel.text = headLin.title;
-    _typeBLabel.text = headLin.type;
+    NewsHeadLinesModel *modelT = model.newsHeadline[0];
+    [_topBtn setTitle:[NSString stringWithFormat:@"%@ %@", modelT.type, modelT.title] forState:UIControlStateNormal];
+    _topBtn.titleLabel.font = [UIFont systemFontOfSize:13.0];
+ 
+    NewsHeadLinesModel *modelB = model.newsHeadline[1];
+    [_bottomBtn setTitle:[NSString stringWithFormat:@"%@ %@", modelB.type, modelB.title] forState:UIControlStateNormal];
+    _bottomBtn.titleLabel.font = [UIFont systemFontOfSize:13.0];
 }
 
 - (void)awakeFromNib {
@@ -94,7 +92,7 @@
 //    meituanmovie://www.meituan.com/forum/postDetail?postID=94705
     NewsHeadLinesModel *model = _model.newsHeadline[0];
     if ([[UIApplication sharedApplication] openURL:[NSURL URLWithString:model.url]]) {
-        NSLog(@"ok");
+
     };
     
 }

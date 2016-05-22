@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface MovieModel : NSObject
+@interface MovieModel : NSObject 
 
 @property (nonatomic, strong) NSString *cat;
 @property (nonatomic, assign) BOOL commented;

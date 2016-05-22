@@ -47,8 +47,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"browser_previous@2x"] style:UIBarButtonItemStylePlain target:self action:@selector(backBarButtonItemTaped)];
 }
 
+
+- (void)backBarButtonItemTaped {
+    [self.navigationController popViewControllerAnimated:NO];
+}
 
 - (void)setUrlStr:(NSString *)urlStr {
     _urlStr = urlStr;

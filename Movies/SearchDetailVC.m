@@ -108,7 +108,7 @@ static NSString *cellIdentifier = @"cell";
         manager.requestSerializer = [AFJSONRequestSerializer serializer];
         
         [manager GET:url parameters:parameter progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            NSLog(@"%@", responseObject);
+
             NSDictionary *resultDict = (NSDictionary *)responseObject;
 //            NSArray *resultArr = resultDict[@"data"][@"list"];
             NSArray *arr = resultDict[@"data"];
@@ -121,7 +121,7 @@ static NSString *cellIdentifier = @"cell";
 
             [self loadTableView];
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            NSLog(@"%@", error);
+
         }];
     }
     
@@ -138,7 +138,7 @@ static NSString *cellIdentifier = @"cell";
         
         manager.requestSerializer = [AFJSONRequestSerializer serializer];
         [manager GET:url parameters:parameter progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            NSLog(@"%@", responseObject);
+
             
             NSDictionary *resultDict = (NSDictionary *)responseObject;
             //            NSArray *resultArr = resultDict[@"data"][@"list"];
@@ -152,7 +152,7 @@ static NSString *cellIdentifier = @"cell";
             
             [self loadTableView];
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            NSLog(@"%@", error);
+
         }];
     }
     
@@ -170,7 +170,7 @@ static NSString *cellIdentifier = @"cell";
         
         
         [manager GET:url parameters:parameter progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            NSLog(@"%@", responseObject);
+
             
             NSDictionary *resultDict = (NSDictionary *)responseObject;
             //            NSArray *resultArr = resultDict[@"data"][@"list"];
@@ -186,7 +186,7 @@ static NSString *cellIdentifier = @"cell";
             
             [self loadTableView];
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            NSLog(@"%@", error);
+
         }];
         
         
@@ -308,7 +308,7 @@ static NSString *cellIdentifier = @"cell";
 //        NSString *str2 = [str stringByAppendingString:@"&__skck=6a375bce8c66a0dc293860dfa83833ef&__skts=1460037176796&__skua=7e01cf8dd30a179800a7a93979b430b2&__skno=6478cbce-cbdb-4891-ae32-be6e988cd459&__skcy=iazvqXeSMkphadlRPaDWbDCfN1k%3D"];
     
         [manager GET:str1 parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            NSLog(@"%@", responseObject);
+
             NSDictionary *resultDict = (NSDictionary *)responseObject;
             NSArray *arr = resultDict[@"data"];
             NSArray *arr1 = arr[0][@"list"];
@@ -320,7 +320,7 @@ static NSString *cellIdentifier = @"cell";
             
             [self loadTableView];
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            NSLog(@"%@", error);
+
         }];
 }
 

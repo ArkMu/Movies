@@ -26,6 +26,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.navigationItem.title = @"海外";
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    
     _locationArr = @[@"美国",@"韩国",@"日本"];
     _btnArr = [NSMutableArray array];
     
