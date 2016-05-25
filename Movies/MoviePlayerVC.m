@@ -88,7 +88,7 @@ static NSString *cellIdentifier = @"cell";
     
     _manager = [AFHTTPSessionManager manager];
     
-      NSString *url =  @"http://api.meituan.com/mmdb/movie/246234/videos.json?__vhost=api.maoyan.com&utm_campaign=AmovieBmovieCD-1&movieBundleVersion=6601&utm_source=qihu360-dy&utm_medium=android&utm_term=6.6.0&utm_content=353617055672400&ci=73&net=255&dModel=LT26ii&uuid=587CEF31FE587F2FDEB7EA51D16D4D7C3165B08724FB309D1056B5BED71757FD&lat=34.819342&lng=113.564188&__skck=6a375bce8c66a0dc293860dfa83833ef&__skts=1459905918645&__skua=7e01cf8dd30a179800a7a93979b430b2&__skno=fc9c9f2f-8714-4c6d-9524-21c722e640e0&__skcy=xMpejxE0Y8YJFgZ6PtszuSVbHGU%3D";
+      NSString *url =  @"http://api.meituan.com/mmdb/movie/246375/videos.json?__vhost=api.maoyan.com&utm_campaign=AmovieBmovieCD-1&movieBundleVersion=6801&utm_source=qihu360-dy&utm_medium=android&utm_term=6.8.0&utm_content=353617055672400&ci=73&net=255&dModel=LT26ii&uuid=587CEF31FE587F2FDEB7EA51D16D4D7C3165B08724FB309D1056B5BED71757FD&lat=34.81933&lng=113.564789&__skck=6a375bce8c66a0dc293860dfa83833ef&__skts=1463839165989&__skua=7e01cf8dd30a179800a7a93979b430b2&__skno=42939e16-7f3d-44be-96ed-ece4f260937b&__skcy=f%2F8rKlvMFPtV1CAh6SCXKYPcF6A%3D";
     
 //    http://api.meituan.com/mmdb/movie/13511/videos.json?__vhost=api.maoyan.com&utm_campaign=AmovieBmovieCD-1&movieBundleVersion=6801&utm_source=qihu360-dy&utm_medium=android&utm_term=6.8.0&utm_content=353617055672400&ci=73&net=255&dModel=LT26ii&uuid=587CEF31FE587F2FDEB7EA51D16D4D7C3165B08724FB309D1056B5BED71757FD&lat=34.819324&lng=113.564869&__skck=6a375bce8c66a0dc293860dfa83833ef&__skts=1463837636124&__skua=7e01cf8dd30a179800a7a93979b430b2&__skno=db50ecf7-cc2d-4b65-a5e3-5bc26543320b&__skcy=uNPTBTVeQ4vewtqm5sedHhBg4fI%3D
     
@@ -100,9 +100,9 @@ static NSString *cellIdentifier = @"cell";
     // 爱丽丝
 //    http://api.meituan.com/mmdb/movie/343379/videos.json?__vhost=api.maoyan.com&utm_campaign=AmovieBmovieCD-1&movieBundleVersion=6801&utm_source=qihu360-dy&utm_medium=android&utm_term=6.8.0&utm_content=353617055672400&ci=73&net=255&dModel=LT26ii&uuid=587CEF31FE587F2FDEB7EA51D16D4D7C3165B08724FB309D1056B5BED71757FD&lat=34.81933&lng=113.564789&__skck=6a375bce8c66a0dc293860dfa83833ef&__skts=1463839409974&__skua=7e01cf8dd30a179800a7a93979b430b2&__skno=8a55dd50-7364-4e68-bf46-41f7c6cd60f2&__skcy=RqlTFXgAR3acboP7uQJQksepP8o%3D
     
-    NSString *baseUrl = [NSString stringWithFormat:@"http://api.meituan.com/mmdb/movie/%ld/videos.json?__vhost=api.maoyan.com&utm_campaign=AmovieBmovieCD-1&movieBundleVersion=6801&utm_source=qihu360-dy&utm_medium=android&utm_term=6.8.0&utm_content=353617055672400&ci=73&net=255&dModel=LT26ii&uuid=587CEF31FE587F2FDEB7EA51D16D4D7C3165B08724FB309D1056B5BED71757FD&lat=34.81933&lng=113.564789&__skck=6a375bce8c66a0dc293860dfa83833ef&__skts=1463839165989&__skua=7e01cf8dd30a179800a7a93979b430b2&__skno=42939e16-7f3d-44be-96ed-ece4f260937b&__skcy=f/8rKlvMFPtV1CAh6SCXKYPcF6A=", _movieId];
+//    NSString *baseUrl = [NSString stringWithFormat:@"http://api.meituan.com/mmdb/movie/%ld/videos.json?__vhost=api.maoyan.com&utm_campaign=AmovieBmovieCD-1&movieBundleVersion=6801&utm_source=qihu360-dy&utm_medium=android&utm_term=6.8.0&utm_content=353617055672400&ci=73&net=255&dModel=LT26ii&uuid=587CEF31FE587F2FDEB7EA51D16D4D7C3165B08724FB309D1056B5BED71757FD&lat=34.81933&lng=113.564789&__skck=6a375bce8c66a0dc293860dfa83833ef&__skts=1463839165989&__skua=7e01cf8dd30a179800a7a93979b430b2&__skno=42939e16-7f3d-44be-96ed-ece4f260937b&__skcy=f/8rKlvMFPtV1CAh6SCXKYPcF6A=", _movieId];
     
-    [_manager GET:baseUrl parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [_manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSDictionary *resultDict = (NSDictionary *)responseObject;
         
         NSArray *arr = resultDict[@"vlist"];
@@ -252,6 +252,7 @@ static NSString *cellIdentifier = @"cell";
         _slider.minimumTrackTintColor = [UIColor redColor];
         _slider.continuous = NO;
         
+        _slider.userInteractionEnabled = NO;
         [_slider addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventValueChanged];
     }
     [self addProgressObserver];
@@ -279,6 +280,8 @@ static NSString *cellIdentifier = @"cell";
     __weak typeof(self) mySelf = self;
     
     _observer = [self.player addPeriodicTimeObserverForInterval:CMTimeMake(1.0, 1.0) queue:dispatch_get_main_queue() usingBlock:^(CMTime time) {
+        mySelf.slider.userInteractionEnabled = YES;
+        
         float current = CMTimeGetSeconds(time);
         
         float total = CMTimeGetSeconds([playItem duration]);

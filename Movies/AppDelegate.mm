@@ -14,6 +14,16 @@
 #import <BaiduMapAPI_Base/BMKBaseComponent.h>
 #import <BaiduMapAPI_Base/BMKBaseComponent.h>
 
+#import <ShareSDK/ShareSDK.h>
+#import <ShareSDKConnector/ShareSDKConnector.h>
+
+#import <TencentOpenAPI/TencentOAuth.h>
+#import <TencentOpenAPI/QQApiInterface.h>
+
+#import "WXApi.h"
+
+#import "WeiboSDK.h"
+
 #define kCollectFile @"collect.plist"
 
 @interface AppDelegate ()
@@ -26,13 +36,13 @@ BMKMapManager *_mapManager;
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-
+    
     [AVOSCloud setApplicationId:@"u3ARmi1yfOS1hesiXWkAu11s-gzGzoHsz"
                       clientKey:@"PpjhdEb4IcBfNO8TuA6CuMRE"];
     
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     UIStoryboard *SB = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-
+    
     if (![[Account shareAccount] isLogin]) {
         self.window.rootViewController = [SB instantiateViewControllerWithIdentifier:@"Login"];
     } else {
@@ -49,6 +59,25 @@ BMKMapManager *_mapManager;
         NSLog(@"manager start failed");
     }
     
+    // sharesdk
+    [ShareSDK registerApp:@"118a38f5eccf4" activePlatforms:@[@(SSDKPlatformTypeSinaWeibo)] onImport:^(SSDKPlatformType platformType) {
+        switch (platformType) {
+            case SSDKPlatformTypeSinaWeibo:
+                [ShareSDKConnector connectWeibo:[WeiboSDK class]];
+                break;
+            default:
+                break;
+        }
+    } onConfiguration:^(SSDKPlatformType platformType, NSMutableDictionary *appInfo) {
+        switch (platformType) {
+            case SSDKPlatformTypeSinaWeibo:
+                [appInfo SSDKSetupSinaWeiboByAppKey:@"2378750555" appSecret:@"e6c2b035d9dbd4d74caaf5ff0dfd5894" redirectUri:@"https://api.weibo.com/oauth2/default.html" authType:SSDKAuthTypeBoth];
+                break;
+                
+            default:
+                break;
+        }
+    }];
     
     return YES;
 }
@@ -72,14 +101,13 @@ BMKMapManager *_mapManager;
     
     NSString *filePath = [document stringByAppendingPathComponent:kCollectFile];
     
-    NSLog(@"%@",filePath);
     return filePath;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-
+    
     
 }
 

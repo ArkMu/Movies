@@ -70,7 +70,7 @@
 		</data>
 		<key>Headers/AVOSCloud.h</key>
 		<data>
-		y1WAhXY5GlUOyO+TbUGyxhvXmWc=
+		mYtJBeWNGKLKFh2Ehz4+MHp8OT4=
 		</data>
 		<key>Headers/AVObject+Subclass.h</key>
 		<data>
@@ -82,7 +82,7 @@
 		</data>
 		<key>Headers/AVPush.h</key>
 		<data>
-		V1zo8/1i3Ibyd+gM7SOZaq9eHJ4=
+		kqDSqWjXvCFixDuttE+ZmAPgA3U=
 		</data>
 		<key>Headers/AVQuery.h</key>
 		<data>
@@ -130,7 +130,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		aMC0iD40/+MD1SPjIc2a3mTRCL8=
+		/X+XfMNi1BiNN/h3uIr0QADE82M=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -323,11 +323,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			y1WAhXY5GlUOyO+TbUGyxhvXmWc=
+			mYtJBeWNGKLKFh2Ehz4+MHp8OT4=
 			</data>
 			<key>hash2</key>
 			<data>
-			Hlv32xm8SrGKHogimilwr1EF48RnOT6VgDixwRKdq+M=
+			nAEt/rS+YGg5bLr4uKPMfkTlkVAsV9UbryjMfgrGO+A=
 			</data>
 		</dict>
 		<key>Headers/AVObject+Subclass.h</key>
@@ -356,11 +356,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			V1zo8/1i3Ibyd+gM7SOZaq9eHJ4=
+			kqDSqWjXvCFixDuttE+ZmAPgA3U=
 			</data>
 			<key>hash2</key>
 			<data>
-			MZA6BAdmvvkliwksGlxCZYwsHveHIS5basnCh2eX4Z4=
+			B22h0D5ZFj5RbrfNp+20PXdIK2kZt1o/r1QcGroi71w=
 			</data>
 		</dict>
 		<key>Headers/AVQuery.h</key>

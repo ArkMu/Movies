@@ -247,6 +247,7 @@ static NSString *cellIdentifier = @"cell";
     DetailVC *detail = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailVC"];
     SearchMovieModel *model = _resultArr[indexPath.row];
     detail.Id = model.Id;
+    detail.movieName = model.nm;
     
     [self.navigationController pushViewController:detail animated:NO];
 }

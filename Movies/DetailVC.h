@@ -12,4 +12,6 @@
 
 @property (nonatomic, assign) NSInteger Id;
 
+@property (nonatomic, strong) NSString *movieName;
+
 @end

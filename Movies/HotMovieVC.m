@@ -156,6 +156,8 @@ static NSString *cellIdentifier = @"cell";
     DetailVC *detail = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([DetailVC class])];
     HotMovieModel *model = _listArr[indexPath.row];
     detail.Id = model.Id;
+    detail.movieName = model.nm;
+    
     [self.navigationController pushViewController:detail animated:NO];
 }
 

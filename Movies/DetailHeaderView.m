@@ -66,7 +66,7 @@
     _app = [UIApplication sharedApplication].delegate;
     
     
-    NSLog(@"%lu", (unsigned long)_app.collectArr.count);
+
     [_app.collectArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([[obj valueForKey:@"Id"] integerValue] == _model.Id) {
             *stop = YES;
@@ -113,6 +113,15 @@
     }
     
 }
+
+
+- (IBAction)shareAction:(UIButton *)sender {
+    if (_share) {
+        _share(_model);
+    }
+    
+}
+
 
 //- (BOOL)insertIntoTable
 

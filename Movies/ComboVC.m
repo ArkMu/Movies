@@ -101,7 +101,7 @@ static NSString *movieIdentidier = @"movie";
     } else {
         _tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
             _pageIndex++;
-            _movieArr = [NSMutableArray array];
+
             [self loadMoreData];
         }];
     }
@@ -181,6 +181,7 @@ static NSString *movieIdentidier = @"movie";
         }
         
         _netReached++;
+        [_tableView reloadData];
         
         if ([_tableView.mj_footer isRefreshing]) {
             [_tableView.mj_footer endRefreshing];
@@ -362,6 +363,7 @@ static NSString *movieIdentidier = @"movie";
     
     ComMovieView *view = (ComMovieView *)tap.view;
     detail.Id = view.model.Id;
+    detail.movieName = view.model.nm;
     
     [self.navigationController pushViewController:detail animated:YES];
 }
@@ -371,6 +373,7 @@ static NSString *movieIdentidier = @"movie";
     
     DetailVC *detail = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([DetailVC class])];
     detail.Id = model.Id;
+    detail.movieName = model.nm;
     
     [self.navigationController pushViewController:detail animated:YES];
 }

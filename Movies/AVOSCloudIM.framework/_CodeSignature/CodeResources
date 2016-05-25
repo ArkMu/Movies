@@ -30,7 +30,7 @@
 		</data>
 		<key>Headers/AVIMConversationQuery.h</key>
 		<data>
-		cQbzOMBCl7FI8PUJhhpCbj0WSnY=
+		jeJ4KQAcrKvu8NDz0u+rzNZyU1M=
 		</data>
 		<key>Headers/AVIMConversationUpdateBuilder.h</key>
 		<data>
@@ -82,7 +82,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		jAxDKK8hh9vb631F/590Kba3xzE=
+		hld06/o79JorFrlVUx94M5BGIFw=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -165,11 +165,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			cQbzOMBCl7FI8PUJhhpCbj0WSnY=
+			jeJ4KQAcrKvu8NDz0u+rzNZyU1M=
 			</data>
 			<key>hash2</key>
 			<data>
-			nBhVXkHYxXQyVjoYa5w0Mfwlc4oZwNFoADO8gnKMDFk=
+			S5rocqrt8YlXp2EmI4fBgvf26fxNgoCDELGk+TPX4og=
 			</data>
 		</dict>
 		<key>Headers/AVIMConversationUpdateBuilder.h</key>

@@ -209,14 +209,14 @@
             </objects>
             <point key="canvasLocation" x="2856.5" y="300.5"/>
         </scene>
-        <!--item-->
+        <!--热映-->
         <scene sceneID="gmx-Uy-QDU">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="K8l-Ux-Mef" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="item" id="23M-VW-Cav">
+                    <tabBarItem key="tabBarItem" title="热映" image="Hot.png" id="23M-VW-Cav">
                         <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="color" keyPath="">
-                                <color key="value" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
+                                <color key="value" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </tabBarItem>
@@ -239,11 +239,17 @@
             </objects>
             <point key="canvasLocation" x="572.5" y="336.5"/>
         </scene>
-        <!--Item-->
+        <!--发现-->
         <scene sceneID="n2u-u7-UB5">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="GpI-qs-fi1" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="y1X-AW-0Uh"/>
+                    <tabBarItem key="tabBarItem" title="发现" image="discover.png" id="y1X-AW-0Uh">
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
+                                <color key="value" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </tabBarItem>
                     <toolbarItems/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="rcy-ZW-461">
@@ -263,11 +269,17 @@
             </objects>
             <point key="canvasLocation" x="572.5" y="-445.5"/>
         </scene>
-        <!--Item-->
+        <!--待映-->
         <scene sceneID="NU2-Hk-sKw">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="47G-f6-Ctf" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="u29-rS-z9v"/>
+                    <tabBarItem key="tabBarItem" title="待映" image="combo.png" id="u29-rS-z9v">
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
+                                <color key="value" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </tabBarItem>
                     <toolbarItems/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="b9V-7P-llt">
@@ -308,11 +320,17 @@
             </objects>
             <point key="canvasLocation" x="-1044" y="1350"/>
         </scene>
-        <!--Item-->
+        <!--海外-->
         <scene sceneID="J11-a9-nXM">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="PoZ-Y6-vdb" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="ll2-Mc-6MB"/>
+                    <tabBarItem key="tabBarItem" title="海外" image="oversea.png" id="ll2-Mc-6MB">
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
+                                <color key="value" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </tabBarItem>
                     <toolbarItems/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="iUp-wx-gWg">
@@ -424,26 +442,10 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="rtw-xu-8Ea">
-                                <rect key="frame" x="127" y="114" width="277" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="shg-16-bfM">
                                 <rect key="frame" x="88" y="160" width="277" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
-                            </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="验证码：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R4F-LQ-nvC">
-                                <rect key="frame" x="10" y="214" width="68" height="20.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="oDV-Zd-Izy">
-                                <rect key="frame" x="88" y="210" width="277" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wru-AL-wcf">
                                 <rect key="frame" x="10" y="319" width="355" height="30"/>
@@ -455,23 +457,22 @@
                                     <action selector="btnAction:" destination="VCw-Gw-0o3" eventType="touchUpInside" id="i4z-n6-lFi"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="rtw-xu-8Ea">
+                                <rect key="frame" x="88" y="109.5" width="277" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="oDV-Zd-Izy" firstAttribute="centerY" secondItem="R4F-LQ-nvC" secondAttribute="centerY" id="7Br-nW-XYY"/>
                             <constraint firstAttribute="trailing" secondItem="wru-AL-wcf" secondAttribute="trailing" constant="10" id="8Cl-BW-Npa"/>
                             <constraint firstItem="wru-AL-wcf" firstAttribute="leading" secondItem="gpE-aD-V3a" secondAttribute="leading" constant="10" id="8eA-gB-11F"/>
-                            <constraint firstItem="R4F-LQ-nvC" firstAttribute="width" secondItem="BiX-al-zcF" secondAttribute="width" id="HKK-fU-e5V"/>
                             <constraint firstItem="YRc-do-JQL" firstAttribute="top" secondItem="G5j-fv-Qew" secondAttribute="bottom" constant="50" id="JCt-d8-uTq"/>
-                            <constraint firstItem="R4F-LQ-nvC" firstAttribute="leading" secondItem="BiX-al-zcF" secondAttribute="leading" id="KSw-9E-gQ3"/>
-                            <constraint firstItem="oDV-Zd-Izy" firstAttribute="width" secondItem="shg-16-bfM" secondAttribute="width" id="LH7-r3-fz0"/>
                             <constraint firstItem="BiX-al-zcF" firstAttribute="leading" secondItem="YRc-do-JQL" secondAttribute="leading" id="NCJ-wa-YWn"/>
                             <constraint firstItem="BiX-al-zcF" firstAttribute="width" secondItem="YRc-do-JQL" secondAttribute="width" id="SCk-4O-Fh0"/>
                             <constraint firstItem="wru-AL-wcf" firstAttribute="centerX" secondItem="gpE-aD-V3a" secondAttribute="centerX" id="WIq-fI-HAA"/>
                             <constraint firstItem="shg-16-bfM" firstAttribute="width" secondItem="rtw-xu-8Ea" secondAttribute="width" id="Xfu-hK-ihI"/>
                             <constraint firstItem="rtw-xu-8Ea" firstAttribute="centerY" secondItem="YRc-do-JQL" secondAttribute="centerY" id="aM1-hV-3x2"/>
-                            <constraint firstItem="oDV-Zd-Izy" firstAttribute="leading" secondItem="shg-16-bfM" secondAttribute="leading" id="bFD-Ro-84Y"/>
-                            <constraint firstItem="R4F-LQ-nvC" firstAttribute="top" secondItem="BiX-al-zcF" secondAttribute="bottom" constant="30" id="eFI-SB-vJA"/>
                             <constraint firstItem="shg-16-bfM" firstAttribute="centerY" secondItem="BiX-al-zcF" secondAttribute="centerY" id="ejg-So-rIp"/>
                             <constraint firstItem="shg-16-bfM" firstAttribute="leading" secondItem="rtw-xu-8Ea" secondAttribute="leading" id="gEc-fs-Naf"/>
                             <constraint firstItem="wru-AL-wcf" firstAttribute="centerY" secondItem="gpE-aD-V3a" secondAttribute="centerY" id="gLF-c9-sCF"/>
@@ -486,7 +487,6 @@
                     <connections>
                         <outlet property="nameTextField" destination="rtw-xu-8Ea" id="vRe-WT-2ea"/>
                         <outlet property="passWordTextField" destination="shg-16-bfM" id="sxR-tK-IQc"/>
-                        <outlet property="secureTextField" destination="oDV-Zd-Izy" id="uj9-I7-Nnx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7UG-y1-g1D" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -594,11 +594,17 @@
             </objects>
             <point key="canvasLocation" x="-1180.5" y="582.5"/>
         </scene>
-        <!--Item-->
+        <!--我-->
         <scene sceneID="8Qp-IT-YbZ">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Lk0-ef-ORJ" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="Uno-Dl-08h"/>
+                    <tabBarItem key="tabBarItem" title="我" image="me.png" id="Uno-Dl-08h">
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
+                                <color key="value" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </tabBarItem>
                     <toolbarItems/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ijp-W5-fBf">
@@ -640,4 +646,11 @@
             <point key="canvasLocation" x="-1676.5" y="582.5"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Hot.png" width="30" height="30"/>
+        <image name="combo.png" width="30" height="30"/>
+        <image name="discover.png" width="30" height="30"/>
+        <image name="me.png" width="30" height="30"/>
+        <image name="oversea.png" width="30" height="30"/>
+    </resources>
 </document>

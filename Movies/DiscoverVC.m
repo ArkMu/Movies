@@ -174,21 +174,21 @@ static NSString *oneImgIdentifier = @"one";
     }];
     
     // 获取4个btn
-    
-    [_manager GET:@"http://api.meituan.com/sns/v2/buttons.json?__vhost=api.maoyan.com&utm_campaign=AmovieBmovieCD-1&movieBundleVersion=6601&utm_source=qihu360-dy&utm_medium=android&utm_term=6.6.0&utm_content=353617055672400&ci=73&net=255&dModel=LT26ii&uuid=587CEF31FE587F2FDEB7EA51D16D4D7C3165B08724FB309D1056B5BED71757FD&lat=34.819315&lng=113.564332" parameters:parameter progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-
-        NSDictionary *resultDict = (NSDictionary *)responseObject;
-        NSArray *arr = resultDict[@"data"];
-        
-        _footViewArr = [NSMutableArray array];
-        for (NSDictionary *dict in arr) {
-            FooterModel *model = [FooterModel modelWithDictionary:dict];
-            [_footViewArr addObject:model];
-        }
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-
-    }];
+//    
+//    [_manager GET:@"http://api.meituan.com/sns/v2/buttons.json?__vhost=api.maoyan.com&utm_campaign=AmovieBmovieCD-1&movieBundleVersion=6601&utm_source=qihu360-dy&utm_medium=android&utm_term=6.6.0&utm_content=353617055672400&ci=73&net=255&dModel=LT26ii&uuid=587CEF31FE587F2FDEB7EA51D16D4D7C3165B08724FB309D1056B5BED71757FD&lat=34.819315&lng=113.564332" parameters:parameter progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+//
+//        NSDictionary *resultDict = (NSDictionary *)responseObject;
+//        NSArray *arr = resultDict[@"data"];
+//        
+//        _footViewArr = [NSMutableArray array];
+//        for (NSDictionary *dict in arr) {
+//            FooterModel *model = [FooterModel modelWithDictionary:dict];
+//            [_footViewArr addObject:model];
+//        }
+//        
+//    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+//
+//    }];
     
     
     
@@ -241,13 +241,13 @@ static NSString *oneImgIdentifier = @"one";
     return 150;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    if (section == 0) {
-        return 100;
-    }
-    
-    return 0.01;
-}
+//- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+//    if (section == 0) {
+//        return 100;
+//    }
+//    
+//    return 0.01;
+//}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (section == 1) {
@@ -299,35 +299,35 @@ static NSString *oneImgIdentifier = @"one";
     
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    if (section == 1) {
-        return nil;
-    }
-    FooterView *view = [tableView dequeueReusableHeaderFooterViewWithIdentifier:footViewIdentifier];
-    view.modelArr = _footViewArr;
-    view.gotoWebView = ^(NSString *url) {
-        WebVC *web = [self.storyboard instantiateViewControllerWithIdentifier:@"WebVC"];
-        
-        NSString *regExString = @"url=.*";
-        NSError *error = nil;
-        NSRegularExpression *regularExpressioin = [NSRegularExpression regularExpressionWithPattern:regExString options:NSRegularExpressionCaseInsensitive error:&error];
-        
-        NSTextCheckingResult *result = [regularExpressioin firstMatchInString:url options:NSMatchingReportProgress range:NSMakeRange(0, url.length)];
-        if (result) {
-            NSRange resultRange = result.range;
-            NSString *resultString = [url substringWithRange:NSMakeRange(resultRange.location + 4, resultRange.length- 4)];
-        
-            NSString *urlString= [resultString stringByRemovingPercentEncoding];
-        
-            web.urlStr = urlString;
-        }
-        
-
-        
-        [self.navigationController pushViewController:web animated:NO];
-    };
-    return view;
-}
+//- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+//    if (section == 1) {
+//        return nil;
+//    }
+//    FooterView *view = [tableView dequeueReusableHeaderFooterViewWithIdentifier:footViewIdentifier];
+//    view.modelArr = _footViewArr;
+//    view.gotoWebView = ^(NSString *url) {
+//        WebVC *web = [self.storyboard instantiateViewControllerWithIdentifier:@"WebVC"];
+//        
+//        NSString *regExString = @"url=.*";
+//        NSError *error = nil;
+//        NSRegularExpression *regularExpressioin = [NSRegularExpression regularExpressionWithPattern:regExString options:NSRegularExpressionCaseInsensitive error:&error];
+//        
+//        NSTextCheckingResult *result = [regularExpressioin firstMatchInString:url options:NSMatchingReportProgress range:NSMakeRange(0, url.length)];
+//        if (result) {
+//            NSRange resultRange = result.range;
+//            NSString *resultString = [url substringWithRange:NSMakeRange(resultRange.location + 4, resultRange.length- 4)];
+//        
+//            NSString *urlString= [resultString stringByRemovingPercentEncoding];
+//        
+//            web.urlStr = urlString;
+//        }
+//        
+//
+//        
+//        [self.navigationController pushViewController:web animated:NO];
+//    };
+//    return view;
+//}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     

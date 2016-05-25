@@ -25,6 +25,9 @@
 #import "FilmReviewsModel.h"
 #import "FilmReviewsCell.h"
 
+#import <ShareSDK/ShareSDK.h>
+#import <ShareSDKUI/ShareSDKUI.h>
+
 @interface DetailVC () <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
 
 @property (nonatomic, strong) MovieModel *MModel;
@@ -54,6 +57,8 @@ static NSString *filmIdentifier = @"film";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.title = _movieName;
     
     _manager = [AFHTTPSessionManager manager];
     
@@ -131,7 +136,69 @@ static NSString *filmIdentifier = @"film";
         
         DetailHeaderView *headerView = [[NSBundle mainBundle] loadNibNamed:NSStringFromClass([DetailHeaderView class]) owner:nil options:nil][0];
         headerView.model = _MModel;
+        headerView.share = ^(MovieModel *model) {
+            NSString *str1 = [model.img substringWithRange:NSMakeRange(0, 22)];
+            NSString *str2 = [model.img substringWithRange:NSMakeRange(26, model.img.length - 26)];
+            
+            NSString *urlStr = [str1 stringByAppendingString:str2];
+            
+            NSArray *imageArr = @[[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:urlStr]]]];
+            
+            if (imageArr) {
+                NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
+                
+                [shareParams SSDKSetupShareParamsByText:model.scm
+                                                 images:imageArr
+                                                    url:[NSURL URLWithString:@""]
+                                                  title:model.nm
+                                                   type:SSDKContentTypeAuto];
+                
+                [ShareSDK showShareActionSheet:nil
+                                         items:nil
+                                   shareParams:shareParams
+                           onShareStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
+                               
+                               switch (state) {
+                                   case SSDKResponseStateSuccess:
+                                   {
+                                       UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"分享成功"
+                                                                                                      message:nil
+                                                                                               preferredStyle:UIAlertControllerStyleAlert];
+                                       
+                                       UIAlertAction *action = [UIAlertAction actionWithTitle:@""
+                                                                                        style:UIAlertActionStyleDefault
+                                                                                      handler:^(UIAlertAction * _Nonnull action) {
+                                                                                          
+                                                                                      }];
+                                       [alert addAction:action];
+                                       [self presentViewController:alert animated:YES completion:nil];
+                                       
+                                       [self resignFirstResponder];
+                                       break;
+                                   }
+                                       
+                                       
+                                   case SSDKResponseStateFail:
+                                   {
+                                       UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"分享失败"
+                                                                                       message:[NSString stringWithFormat:@"%@",error]
+                                                                                      delegate:nil
+                                                                             cancelButtonTitle:@"OK"
+                                                                             otherButtonTitles:nil, nil];
+                                       [alert show];
+                                       break;
+                                   }
+                                   default:
+                                       break;
+                               }
+                           }];
+            }
+            
+        };
+
+        
         _tableView.tableHeaderView = headerView;
+        
         
         _netAccess++;
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {

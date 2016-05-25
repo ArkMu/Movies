@@ -16,20 +16,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="117.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yJB-fs-2Ou">
-                        <rect key="frame" x="8" y="8" width="195" height="97.5"/>
-                        <constraints>
-                            <constraint firstAttribute="width" secondItem="yJB-fs-2Ou" secondAttribute="height" multiplier="2:1" id="PMl-CJ-FZW"/>
-                            <constraint firstAttribute="width" secondItem="yJB-fs-2Ou" secondAttribute="height" multiplier="2:3" id="stB-rP-YLW"/>
-                        </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="stB-rP-YLW"/>
-                            </mask>
-                        </variation>
-                    </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DwA-ZG-fpH">
-                        <rect key="frame" x="211" y="8" width="35.5" height="17"/>
+                        <rect key="frame" x="80" y="8" width="35.5" height="17"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -41,13 +29,13 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6c3-3Y-07b">
-                        <rect key="frame" x="211" y="90" width="33" height="16"/>
+                        <rect key="frame" x="80" y="80.5" width="164" height="16"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="148-N7-n0T">
-                        <rect key="frame" x="252" y="76" width="60" height="30"/>
+                        <rect key="frame" x="252" y="66.5" width="60" height="30"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="60" id="Syv-m3-nQg"/>
                             <constraint firstAttribute="height" constant="30" id="zw3-k3-y7y"/>
@@ -61,27 +49,45 @@
                         </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jqk-Kh-VPp">
-                        <rect key="frame" x="211" y="66" width="33" height="16"/>
+                        <rect key="frame" x="80" y="56.5" width="164" height="16"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fZ0-pb-xW5">
-                        <rect key="frame" x="8" y="114" width="304" height="0.0"/>
+                        <rect key="frame" x="8" y="105" width="304" height="0.0"/>
                         <constraints>
                             <constraint firstAttribute="height" id="vBt-s7-OST"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O8M-1o-laf">
-                        <rect key="frame" x="8" y="122" width="304" height="0.0"/>
+                        <rect key="frame" x="8" y="113" width="304" height="0.0"/>
                         <constraints>
                             <constraint firstAttribute="height" id="V1z-jd-AJl"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     </button>
+                    <imageView userInteractionEnabled="NO" contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yJB-fs-2Ou">
+                        <rect key="frame" x="8" y="8" width="64" height="88.5"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="yJB-fs-2Ou" secondAttribute="height" multiplier="2:1" id="JST-Yq-Tc9"/>
+                            <constraint firstAttribute="width" secondItem="yJB-fs-2Ou" secondAttribute="height" multiplier="2:1" id="JuA-ce-Qsa"/>
+                            <constraint firstAttribute="width" secondItem="yJB-fs-2Ou" secondAttribute="height" multiplier="2:1" id="PMl-CJ-FZW"/>
+                            <constraint firstAttribute="width" secondItem="yJB-fs-2Ou" secondAttribute="height" multiplier="2:3" id="stB-rP-YLW"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="JST-Yq-Tc9"/>
+                                <exclude reference="JuA-ce-Qsa"/>
+                                <exclude reference="PMl-CJ-FZW"/>
+                                <exclude reference="stB-rP-YLW"/>
+                            </mask>
+                        </variation>
+                    </imageView>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="yJB-fs-2Ou" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="1:5" id="33z-fj-hc5"/>
                     <constraint firstAttribute="trailing" secondItem="06m-mR-Bgw" secondAttribute="trailing" constant="8" id="55U-RD-xrw"/>
                     <constraint firstItem="yJB-fs-2Ou" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="1:4" id="60F-NU-JXd"/>
                     <constraint firstItem="Jqk-Kh-VPp" firstAttribute="top" relation="greaterThanOrEqual" secondItem="DwA-ZG-fpH" secondAttribute="bottom" constant="8" id="Bfw-x0-2IM"/>
@@ -94,6 +100,7 @@
                     <constraint firstItem="6c3-3Y-07b" firstAttribute="leading" secondItem="DwA-ZG-fpH" secondAttribute="leading" id="Sms-MR-mDU"/>
                     <constraint firstAttribute="bottom" secondItem="O8M-1o-laf" secondAttribute="bottom" constant="4.5" id="Src-7o-Ir8"/>
                     <constraint firstAttribute="trailing" secondItem="O8M-1o-laf" secondAttribute="trailing" constant="8" id="UhM-xN-frd"/>
+                    <constraint firstItem="yJB-fs-2Ou" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="1:5" id="Vfi-I4-kfc"/>
                     <constraint firstItem="DwA-ZG-fpH" firstAttribute="leading" secondItem="yJB-fs-2Ou" secondAttribute="trailing" constant="8" id="XZA-rh-Yvs"/>
                     <constraint firstAttribute="trailing" secondItem="fZ0-pb-xW5" secondAttribute="trailing" constant="8" id="bIA-V3-jQq"/>
                     <constraint firstItem="fZ0-pb-xW5" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="bLN-SC-rTT"/>
@@ -108,12 +115,18 @@
                     <constraint firstItem="yJB-fs-2Ou" firstAttribute="height" secondItem="H2p-sc-9uM" secondAttribute="height" multiplier="1:2" id="vd7-5P-MSj"/>
                     <constraint firstItem="O8M-1o-laf" firstAttribute="top" secondItem="fZ0-pb-xW5" secondAttribute="bottom" constant="8" id="vl8-yp-plo"/>
                     <constraint firstItem="Jqk-Kh-VPp" firstAttribute="leading" secondItem="DwA-ZG-fpH" secondAttribute="leading" id="wts-r3-WO1"/>
+                    <constraint firstItem="fZ0-pb-xW5" firstAttribute="top" secondItem="yJB-fs-2Ou" secondAttribute="bottom" constant="8.5" id="yIu-07-agQ"/>
                     <constraint firstItem="148-N7-n0T" firstAttribute="trailing" secondItem="06m-mR-Bgw" secondAttribute="trailing" id="yeY-0P-Wtk"/>
+                    <constraint firstItem="yJB-fs-2Ou" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="1:5" id="ztF-WN-IkM"/>
                 </constraints>
                 <variation key="default">
                     <mask key="constraints">
+                        <exclude reference="33z-fj-hc5"/>
+                        <exclude reference="60F-NU-JXd"/>
+                        <exclude reference="Vfi-I4-kfc"/>
                         <exclude reference="vd7-5P-MSj"/>
                         <exclude reference="ced-LP-rYq"/>
+                        <exclude reference="hIx-lu-MyG"/>
                         <exclude reference="iAd-X6-hwJ"/>
                     </mask>
                 </variation>

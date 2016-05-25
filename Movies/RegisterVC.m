@@ -43,16 +43,13 @@
 }
 - (IBAction)btnAction:(UIButton *)sender {
     if (_nameTextField.text != nil && _passWordTextField.text != nil) {
-        NSLog(@"%@", _nameTextField.text);
-        __weak typeof(self) weakSelf = self;
-        
         
         AVUser *user = [[AVUser alloc] init];
         user.username = self.nameTextField.text;
         user.password = self.passWordTextField.text;
         [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             if (succeeded) {
-                NSLog(@"注册成功%@",user.username);
+
                 [[Account shareAccount] saveLogin:user.username];
                 
                 AppDelegate *app = [UIApplication sharedApplication].delegate;

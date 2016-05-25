@@ -14,4 +14,6 @@
 
 @property (nonatomic, strong) MovieModel *model;
 
+@property (nonatomic, copy) void (^share)(MovieModel *model);
+
 @end

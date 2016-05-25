@@ -116,7 +116,7 @@ static NSString *hotCellIdentifier = @"hot";
 //            }
 //        });
     }];
-    
+    _overSeasComingArr = [NSMutableArray array];
     
     [_tableView.mj_header beginRefreshing];
 }
@@ -130,7 +130,7 @@ static NSString *hotCellIdentifier = @"hot";
             [_tableView.mj_header endRefreshing];
         }
     } else {
-        _overSeasComingArr = [NSMutableArray array];
+        
         _tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
             _pagrIndex++;
             [self loadComData];
@@ -242,12 +242,13 @@ static NSString *hotCellIdentifier = @"hot";
         HotMovieCell *cell = [tableView dequeueReusableCellWithIdentifier:hotCellIdentifier];
         cell.model = model;
         return cell;
-    }
+    } else {
     
     HotMovieModel *model = _overSeasComingArr[indexPath.row];
     MovieDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     cell.model = model;
     return cell;
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -276,9 +277,11 @@ static NSString *hotCellIdentifier = @"hot";
     if (indexPath.section == 0) {
         HotMovieModel *model = _overSeasHotArr[indexPath.row];
         detail.Id = model.Id;
+        detail.movieName = model.nm;
     } else {
         HotMovieModel *model = _overSeasComingArr[indexPath.row];
         detail.Id = model.Id;
+        detail.movieName = model.nm;
     }
     
     [self.navigationController pushViewController:detail animated:YES];
